@@ -109,3 +109,11 @@ body {
   .form-signin input[type="password"] {
     margin-bottom: -1px;   
   }
+
+.main-alert{
+    max-width: 400px;
+    margin: 0 auto;
+}
+.alert-hidden{
+ visibility: hidden;   
+}
