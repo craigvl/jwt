@@ -1,4 +1,4 @@
-﻿angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider) {
+angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider) {
 
     $urlRouterProvider.otherwise('/');
 
@@ -11,6 +11,7 @@
 
         .state('register', {
         url: '/register',
-        templateUrl:'/views/register.html'
-    });
+        templateUrl:'/views/register.html',
+        controller:'RegisterCtrl'
+    });    
 })
