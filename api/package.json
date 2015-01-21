@@ -9,6 +9,7 @@
   "author": "Craig Waite",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.10.1",
     "express": "^4.11.0"
   }
 }
