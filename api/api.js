@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -15,12 +16,32 @@ app.use(function (req, res, next) {
 	next();
 });
 
+var User = mongoose.model('User',{
+   email:String,
+   password:String    
+})
+
 app.post('/register',function(req,res){
     console.log('Register Called');
-    //var name1 = console.log(req.body.name);
-        if (!req.body) return res.sendStatus(400)
-  res.send('welcome' + JSON.stringify(req.body.name));
+    
+    if (!req.body) return res.sendStatus(400)
+    
+    var user = req.body;
+    var newUser = new User({
+        email:user.email,
+        password:user.password
+    })
+    
+    newUser.save(function(err){
+        res.status(200).json(newUser);
+    })
+    
+    
+    
+  
 })
+
+mongoose.connect('mongodb://localhost/bunchy');
 
 var server = app.listen(3000,function(){
     console.log('api listening on ', server.address().port);
