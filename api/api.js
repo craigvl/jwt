@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var User = require('./models/User.js');
+var jwt = require('./services/jwt.js');
 
 var app = express();
 
@@ -28,13 +29,23 @@ app.post('/register',function(req,res){
         password:user.password
     })
     
+    var payLoad = {
+    iss: req.hostname,
+    sub: user._id
+    }
+    
+    var token = jwt.encode(payLoad,"shhh....");
+    
     newUser.save(function(err){
-        res.status(200).json(newUser);
-    })
+        res.status(200).send({
+            user:newUser.toJSON(),
+            token:token       
+    });
+  })
 })
 
 mongoose.connect('mongodb://localhost/bunchy');
 
-var server = app.listen(3000,function(){
+var server = app.listen(3000, function () {
     console.log('api listening on ', server.address().port);
 })
