@@ -1,22 +1,32 @@
-angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider) {
+angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $httpProvider) {
 
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
 
-        .state('main', {
-            url: '/',
-            templateUrl:'/views/main.html'
-        })
-
-        .state('register', {
-        url: '/register',
-        templateUrl:'/views/register.html',
-        controller:'RegisterCtrl'
+    .state('main', {
+        url: '/',
+        templateUrl: '/views/main.html'
     })
-    
+
+    .state('register', {
+        url: '/register',
+        templateUrl: '/views/register.html',
+        controller: 'RegisterCtrl'
+    })
+
+    .state('bunches', {
+        url: '/bunches',
+        templateUrl: '/views/bunches.html',
+        controller: 'BunchesCtrl'
+    })
+
     .state('logout', {
         url: '/logout',
-        controller:'LogoutCtrl'
-    }); 
-   })
+        controller: 'LogoutCtrl'
+    });
+    
+    $httpProvider.interceptors.push('authInterceptor');
+})
+
+.constant('API_URL','http://localhost:3000/');

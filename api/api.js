@@ -44,6 +44,19 @@ app.post('/register',function(req,res){
   })
 })
 
+var bunches = [
+    'Pats',
+    'foo'
+];
+app.get('/bunches', function (req, res) {
+        if (!req.headers.authorization) {
+            return res.status(401).send({
+                    message: 'you are not authorized'
+            });
+    }
+    res.send(bunches);
+})
+
 mongoose.connect('mongodb://localhost/bunchy');
 
 var server = app.listen(3000, function () {
