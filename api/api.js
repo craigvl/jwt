@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var User = require('./models/User.js');
-var jwt = require('./services/jwt.js');
+var jwt = require('jwt-simple');
 
 var app = express();
 
@@ -24,25 +24,55 @@ app.post('/register',function(req,res){
     if (!req.body) return res.sendStatus(400)
     
     var user = req.body;
-    var newUser = new User.model({
+    var newUser = new User({
         email:user.email,
         password:user.password
     })
-    
-    var payLoad = {
-    iss: req.hostname,
-    sub: newUser.id
-    }
-    
-    var token = jwt.encode(payLoad,"shhh....");
-    
+
     newUser.save(function(err){
-        res.status(200).send({
-            user:newUser.toJSON(),
-            token:token       
-    });
+        createSendToken(newUser,res);
   })
 })
+
+app.post('/login', function (req, res) {
+    req.user = req.body;
+    
+    var serachUser = {
+        email: req.user.email
+    }
+    
+    User.findOne(function (err, user) {
+        if (err) throw err
+        
+        if(!user)
+            return res.status(401).send({message:'Wrong email/password'});
+        
+        user.comparePasswords(req.user.password, function (err, isMatch) {
+            if (err) throw err;
+            
+        if(!isMatch)
+            return res.status(401).send({message:'Wrong email/password'});
+            
+            createToken(user, res);
+
+        });
+    })
+})
+
+function createSendToken(user, res) {
+
+    var payLoad = {
+        sub: user.id
+    }
+
+    var token = jwt.encode(payLoad, "shhh....");
+
+    res.status(200).send({
+        user: user.toJSON(),
+        token: token
+    });
+
+}
 
 var bunches = [
     'Pats',
@@ -68,7 +98,7 @@ app.get('/bunches', function (req, res) {
     res.send(bunches);
 })
 
-mongoose.connect('mongodb://localhost/bunchy');
+mongoose.connect('mongodb://localhost/bunchy')
 
 var server = app.listen(3000, function () {
     console.log('api listening on ', server.address().port);
