@@ -53,7 +53,7 @@ app.post('/login', function (req, res) {
         if(!isMatch)
             return res.status(401).send({message:'Wrong email/password'});
             
-            createToken(user, res);
+            createSendToken(user, res);
 
         });
     })
