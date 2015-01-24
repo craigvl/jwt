@@ -37,11 +37,11 @@ app.post('/register',function(req,res){
 app.post('/login', function (req, res) {
     req.user = req.body;
     
-    var serachUser = {
+    var SearchUser = {
         email: req.user.email
     }
-    
-    User.findOne(function (err, user) {
+    console.log(SearchUser.email);
+    User.findOne(SearchUser,function (err, user) {
         if (err) throw err
         
         if(!user)
