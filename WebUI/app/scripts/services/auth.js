@@ -16,7 +16,7 @@ angular.module('jwtApp')
         }
 
         this.register = function (email, password) {
-            return $http.post(API_URL + 'register', {
+            return $http.post('http://localhost:1337/auth/register', {
                 email: email,
                 password: password
             }).success(authSuccessful);
