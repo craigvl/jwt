@@ -15,12 +15,13 @@ angular.module('jwtApp')
             }).success(authSuccessful);
         }
 
-        this.register = function (email, password, firstname, lastname) {
+        this.register = function (email, password, firstname, lastname,selectedlocationid) {
             return $http.post(API_URL + 'auth/register', {
                 email: email,
                 password: password,
                 lastname: lastname,
                 firstname: firstname,
+                location: selectedlocationid
             }).success(authSuccessful);
         }
     });
