@@ -5,7 +5,7 @@ angular.module('jwtApp')
 
         function authSuccessful(res) {
             authToken.setToken(res.token);
-            $state.go('main');
+            $state.go('bunches');
         }
 
         this.login = function (email, password) {
@@ -15,10 +15,12 @@ angular.module('jwtApp')
             }).success(authSuccessful);
         }
 
-        this.register = function (email, password) {
+        this.register = function (email, password, firstname, lastname) {
             return $http.post(API_URL + 'auth/register', {
                 email: email,
-                password: password
+                password: password,
+                lastname: lastname,
+                firstname: firstname,
             }).success(authSuccessful);
         }
     });
