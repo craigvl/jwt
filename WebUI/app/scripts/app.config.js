@@ -35,4 +35,4 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
     $httpProvider.interceptors.push('authInterceptor');
 })
 
-.constant('API_URL','http://localhost:3000/');
+.constant('API_URL','http://localhost:1337/');

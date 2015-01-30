@@ -33,10 +33,10 @@ var strategy = new LocalStrategy({
         email: email
     };
 
-    User.findOne(searchUser, function (err, user) {
+    User.findOne(searchUser, function (err, user) {   
         if (err) return done(err);
-
         if (!user)
+            
             return done(null, false, {
                 message: 'Wrong email/password'
             });

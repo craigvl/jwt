@@ -9,14 +9,14 @@ angular.module('jwtApp')
         }
 
         this.login = function (email, password) {
-            return $http.post('http://localhost:1337/auth/login', {
+            return $http.post(API_URL + 'auth/login', {
                 email: email,
                 password: password
             }).success(authSuccessful);
         }
 
         this.register = function (email, password) {
-            return $http.post('http://localhost:1337/auth/register', {
+            return $http.post(API_URL + 'auth/register', {
                 email: email,
                 password: password
             }).success(authSuccessful);
