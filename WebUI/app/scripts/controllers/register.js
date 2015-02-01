@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('RegisterCtrl', function ($scope,$http, API_URL,alert,auth,$state) {
+    .controller('RegisterCtrl', function ($scope, $http, API_URL, alert, auth, $state) {
         $scope.local = {};
-    
-    
         $http.get(API_URL + 'location').success(function (locations) {
             $scope.locations = locations;
         }).error(function (err) {
