@@ -8,7 +8,7 @@ angular.module('jwtApp')
          alert('success','Welcome ','Thanks for coming back ' + res.user.email +'!');          
       })
       .error(function(err){
-        alert('warning','Something went wrong :( ',err.message);
+        alert('warning','Something went wrong! ',err.message);
       });
    }
   });

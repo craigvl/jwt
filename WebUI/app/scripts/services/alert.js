@@ -15,6 +15,6 @@ angular.module('jwtApp')
         $timeout.cancel(alertTimeout);
         alertTimeout = $timeout(function() {
             $rootScope.alert.show = false;
-        }, timeout || 2000);
+        }, timeout || 2500);
     }
 });

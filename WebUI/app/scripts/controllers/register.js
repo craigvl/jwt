@@ -21,7 +21,7 @@ angular.module('jwtApp')
                     alert('success', 'Account Created! ', 'Welcome ' + res.user.email + '!');
                 })
                 .error(function (err) {
-                    alert('warning', 'Something went wrong:(:', err.message);
+                    alert('warning', 'Something went wrong! ', err.message);
                 });
         }
     });
