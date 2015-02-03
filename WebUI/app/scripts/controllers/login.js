@@ -10,6 +10,11 @@ angular.module('jwtApp')
       .error(function(err){
         alert('warning','Something went wrong! ',err.message);
       });
-   }
+   };
+    
+    $scope.google = function () {
+        auth.googleAuth();
+    }
+    
   });
 
