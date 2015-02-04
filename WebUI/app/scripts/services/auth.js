@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jwtApp')
-    .service('auth', function auth($http, API_URL, authToken, $state, $window, $q) {
+    .service('auth', function auth($http, API_URL, authToken, $state, $window, $q, alert) {
 
         function authSuccessful(res) {
             authToken.setToken(res.token);
@@ -24,7 +24,7 @@ angular.module('jwtApp')
                 location: selectedlocationid
             }).success(authSuccessful);
         }
-        
+
         this.googleAuth = function () {
 
             var urlBuilder = [];
@@ -55,6 +55,8 @@ angular.module('jwtApp')
                     }).success(function (jwt) {
                         authSuccessful(jwt);
                         deferred.resolve(jwt);
+                    }).error(function (err) {
+                        alert('warning',"Unable to connect to google?",'');
                     });
                 }
             });
