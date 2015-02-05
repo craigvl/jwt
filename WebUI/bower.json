@@ -11,7 +11,9 @@
     "angular-animate": "~1.3.10",
     "angular-ui-select": "~0.9.6",
     "ngSanitize": "~0.0.2",
-    "angular-sanitize": "~1.3.11"
+    "angular-sanitize": "~1.3.11",
+    "angular-spinner": "~0.6.1",
+    "angular-directive.g-signin": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

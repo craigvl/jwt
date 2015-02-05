@@ -22,8 +22,6 @@ angular.module('jwtApp')
                 cachedToken = null;
                 storage.removeItem(userToken);
             }
-        }
-        
-        return authToken;
-        
+        }     
+        return authToken;      
     });

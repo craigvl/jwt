@@ -14,8 +14,8 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
         templateUrl: '/views/register.html',
         controller: 'RegisterCtrl'
     })
-    
-      .state('login', {
+
+    .state('login', {
         url: '/login',
         templateUrl: '/views/login.html',
         controller: 'LoginCtrl'
@@ -31,19 +31,8 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
         url: '/logout',
         controller: 'LogoutCtrl'
     });
-    
+
     $httpProvider.interceptors.push('authInterceptor');
 })
 
-.constant('API_URL','http://localhost:1337/')
-
-.run(function ($window) {
-	var params = $window.location.search.substring(1);
-
-	if (params && $window.opener && $window.opener.location.origin === $window.location.origin) {
-		var pair = params.split('=');
-		var code = decodeURIComponent(pair[1]);
-
-		$window.opener.postMessage(code, $window.location.origin);
-	}
-});
+.constant('API_URL', 'http://localhost:1337/')
