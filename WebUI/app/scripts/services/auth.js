@@ -26,22 +26,26 @@ angular.module('jwtApp')
             }).success(authSuccessful);
         }
 
+        this.revokeGoogleToken = function (access_token) {
+            return $http.get('https://accounts.google.com/o/oauth2/revoke?token=' + access_token).success(function () {}).error(function () {});
+        }
+
         this.googleAuth = function (access_token) {
 
             var urlBuilder = [];
             var clientId = '549020993769-tn974vfkrovsr1k4g65135k6m02vec6j.apps.googleusercontent.com';
             var deferred = $q.defer();
-                    //console.log(access_token);
-                    $http.post(API_URL + 'auth/google', {
-                        access_token: access_token,
-                        clientId: clientId,
-                        redirectUri: '/'
-                    }).success(function (jwt) {
-                        console.log(jwt);
-                        authSuccessful(jwt);
-                        deferred.resolve(jwt);
-                    }).error(function (err) {
-                        alert('warning', "Unable to connect to google?", '');
+            //console.log(access_token);
+            $http.post(API_URL + 'auth/google', {
+                access_token: access_token,
+                clientId: clientId,
+                redirectUri: '/'
+            }).success(function (jwt) {
+                console.log(jwt);
+                authSuccessful(jwt);
+                deferred.resolve(jwt);
+            }).error(function (err) {
+                alert('warning', "Unable to connect to google?", '');
             });
 
             return deferred.promise;

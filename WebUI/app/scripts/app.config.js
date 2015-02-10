@@ -33,6 +33,11 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
     });
 
     $httpProvider.interceptors.push('authInterceptor');
+    $httpProvider.defaults.useXDomain = true;
+    $httpProvider.defaults.withCredentials = true;
+    delete $httpProvider.defaults.headers.common["X-Requested-With"];
+    $httpProvider.defaults.headers.common["Accept"] = "application/json";
+    $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
 })
 
 .constant('API_URL', 'http://localhost:1337/')
