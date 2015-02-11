@@ -15,16 +15,5 @@
         <br />
         <hr />
     </div>
-    <div id="gSignInWrapper">
-        <div ng-app="directive.g+signin">
-            <google-plus-signin clientid="549020993769-tn974vfkrovsr1k4g65135k6m02vec6j.apps.googleusercontent.com"></google-plus-signin>
-        </div>
-    </div>
-
-
-    <button type="button" class="btn btn-primary btn-large" data-ng-show="!logged" data-ng-disabled="!facebookReady" ng-click="IntentLogin()">Login with Facebook</button>
-    <button type="button" class="btn btn-danger btn-large" data-ng-show="logged" data-ng-disabled="!facebookReady" ng-click="logout()">Logout</button>
-
-    <button type="button" class="btn btn-primary btn-large" data-ng-disabled="!facebookReady" data-ng-click="me()">Me</button>
-
+    <button ng-click="authenticate('google')" class="btn btn-lg btn-default btn-block" type="button">Google</button>
 </form>
