@@ -21,7 +21,7 @@ angular.module('jwtApp')
                     alert('success', 'Account Created! ', 'Welcome ' + res.data.user.email + '! You have been sent a verification email.');
                 })
                 .catch(function (err) {
-                    alert('warning', 'Something went wrong! ', err.message);
+                    alert('warning', 'Something went wrong! ', err.data.message);
                 });
         }
     });
