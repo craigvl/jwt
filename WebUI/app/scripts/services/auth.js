@@ -9,28 +9,11 @@ angular.module('jwtApp')
             $state.go('bunches');
         }
 
-        this.login = function (email, password) {
-            return $http.post(API_URL + 'auth/login', {
-                email: email,
-                password: password
-            }).success(authSuccessful);
-        }
-
-        this.register = function (email, password, firstname, lastname, selectedlocationid) {
-            return $http.post(API_URL + 'auth/register', {
-                email: email,
-                password: password,
-                lastname: lastname,
-                firstname: firstname,
-                location: selectedlocationid
-            }).success(authSuccessful);
-        }
-
-        this.revokeGoogleToken = function (access_token) {
+       this.revokeGoogleToken = function (access_token) {
             return $http.get('https://accounts.google.com/o/oauth2/revoke?token=' + access_token).success(function () {}).error(function () {});
         }
 
-        this.googleAuth = function (access_token) {
+        this.stravaAuth = function () {
 
             var urlBuilder = [];
             var clientId = '549020993769-tn974vfkrovsr1k4g65135k6m02vec6j.apps.googleusercontent.com';

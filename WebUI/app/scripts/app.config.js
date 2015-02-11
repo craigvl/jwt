@@ -38,6 +38,17 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
     $authProvider.facebook({clientId:'1403149849923216',
                          url: API_URL + 'auth/facebook'});
     
+     $authProvider.oauth2({
+      name: 'strava',
+      url: API_URL + 'auth/strava',
+      clientId: '4728',
+      redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
+      response_type: 'code',
+      scope:'write',
+      approval_prompt:'force',
+      authorizationEndpoint: 'https://www.strava.com/oauth/authorize'
+    });
+    
     $authProvider.loginUrl = API_URL + 'auth/login';
     $authProvider.signupUrl = API_URL + 'auth/register';
 
