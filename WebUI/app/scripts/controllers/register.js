@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('RegisterCtrl', function ($scope, $http, API_URL, alert, auth, $state) {
+    .controller('RegisterCtrl', function ($scope, $http, API_URL, alert, $auth, $state) {
         $scope.local = {};
         $http.get(API_URL + 'location').success(function (locations) {
             $scope.locations = locations;
@@ -16,11 +16,11 @@ angular.module('jwtApp')
         })
 
         $scope.submit = function () {
-            auth.register($scope.email, $scope.password, $scope.firstname, $scope.lastname, $scope.local.selected)
-                .success(function (res) {
-                    alert('success', 'Account Created! ', 'Welcome ' + res.user.email + '!');
+            $auth.signup({email:$scope.email,password: $scope.password, firstname: $scope.firstname,lastname: $scope.lastname,location: $scope.local.selected})
+                .then(function (res) {
+                    alert('success', 'Account Created! ', 'Welcome ' + res.data.user.email + '! You have been sent a verification email.');
                 })
-                .error(function (err) {
+                .catch(function (err) {
                     alert('warning', 'Something went wrong! ', err.message);
                 });
         }

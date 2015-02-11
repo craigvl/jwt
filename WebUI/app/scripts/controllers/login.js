@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('LoginCtrl', function ($scope, alert, auth, usSpinnerService, $auth) {
+    .controller('LoginCtrl', function ($scope, alert, usSpinnerService, $auth) {
 
         $scope.authenticate = function (provider) {
             $auth.authenticate(provider).then(function (res) {

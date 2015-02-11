@@ -35,6 +35,9 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
     $authProvider.google({clientId:'549020993769-tn974vfkrovsr1k4g65135k6m02vec6j.apps.googleusercontent.com',
                          url: API_URL + 'auth/google'});
     
+    $authProvider.facebook({clientId:'1403149849923216',
+                         url: API_URL + 'auth/facebook'});
+    
     $authProvider.loginUrl = API_URL + 'auth/login';
     $authProvider.signupUrl = API_URL + 'auth/register';
 
