@@ -26,6 +26,12 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
         templateUrl: '/views/bunches.html',
         controller: 'BunchesCtrl'
     })
+    
+    .state('bunchcreate', {
+        url: '/bunchcreate',
+        templateUrl: '/views/bunchcreate.html',
+        controller: 'BunchcreateCtrl'
+    })
 
     .state('logout', {
         url: '/logout',

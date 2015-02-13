@@ -3,7 +3,7 @@
 angular.module('jwtApp')
     .controller('RegisterCtrl', function ($scope, $http, API_URL, alert, $auth, $state) {
         $scope.local = {};
-        $http.get(API_URL + 'location').success(function (locations) {
+        $http.get(API_URL + 'bylocation').success(function (locations) {
             $scope.locations = locations;
         }).error(function (err) {
             if (err == null) {

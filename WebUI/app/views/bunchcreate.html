@@ -1,0 +1,41 @@
+<form ng-submit="submit()" name="createbunch" class="form" novalidate>
+    <span us-spinner spinner-key="createSpin" spinner-start-active="false"></span>
+    <h1 class="form-signin-heading">Create a bunch.</h1>
+    <hr>
+    <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of bunch" required>
+    <ui-select theme="bootstrap" ng-model="local.selected" required>
+        <ui-select-match placeholder="Select location...">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="local in locations | filter:{ name: $select.search }">
+            <div ng-bind-html="local.name"></div>
+        </ui-select-choices>
+    </ui-select>
+    <div>
+        <h3>Is this a one off ride?</h3> 
+        <input class="form-control" type="checkbox" ng-model="oneoff"></input>
+    </div>
+    <h3>Start location</h3>
+    <leaflet class="form-control" markers="markers" id="mymap" defaults="defaults" center="center" height="480px"></leaflet>
+    <div ng-hide="oneoff">
+        <h3>Days of week</h3>
+        <ui-select multiple ng-model="multipleSelect.days" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+            <ui-select-match placeholder="Select days...">{{$item}}</ui-select-match>
+            <ui-select-choices repeat="day in availableDays | filter:$select.search">
+                {{day}}
+            </ui-select-choices>
+        </ui-select>
+        <p></p>
+        <p>Time of ride: {{ regularTime | date:'h:mm a' }}</p>
+        <datetimepicker data-ng-model="regularTime" data-datetimepicker-config="{ startView: 'hour', minuteStep: 15 }" />
+    </div>
+    <div ng-hide="!oneoff">Date and time {{ oneOffTime | date:'medium' }}</p>
+        <datetimepicker data-ng-model="oneOffTime" data-datetimepicker-config="{ startView: 'day', minuteStep: 15 }" /></div>
+    <div>
+        <h3>Is this a private ride?</h3> 
+        <input class="form-control" type="checkbox" ng-model="private"></input>
+    </div>
+    <p></p>
+    <button ng-click="" ng-disabled="register.$invalid" class="btn btn-lg btn-success btn-block" type="submit">
+        Create
+    </button>
+    <br />
+</form>
