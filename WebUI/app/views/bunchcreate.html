@@ -10,7 +10,7 @@
         </ui-select-choices>
     </ui-select>
     <div>
-        <h3>Is this a one off ride?</h3> 
+        <h3>Is this a one off ride?</h3>
         <input class="form-control" type="checkbox" ng-model="oneoff"></input>
     </div>
     <h3>Start location</h3>
@@ -25,12 +25,17 @@
         </ui-select>
         <p></p>
         <p>Time of ride: {{ regularTime | date:'h:mm a' }}</p>
-        <datetimepicker data-ng-model="regularTime" data-datetimepicker-config="{ startView: 'hour', minuteStep: 15 }" />
+        Hour
+        <p></p>
+        Minute
+        <p></p>
+        AM / PM
     </div>
     <div ng-hide="!oneoff">Date and time {{ oneOffTime | date:'medium' }}</p>
-        <datetimepicker data-ng-model="oneOffTime" data-datetimepicker-config="{ startView: 'day', minuteStep: 15 }" /></div>
+        <datetimepicker data-ng-model="oneOffTime" data-datetimepicker-config="{ startView: 'day', minuteStep: 15 }" />
+    </div>
     <div>
-        <h3>Is this a private ride?</h3> 
+        <h3>Is this a private ride?</h3>
         <input class="form-control" type="checkbox" ng-model="private"></input>
     </div>
     <p></p>

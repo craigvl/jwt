@@ -3,7 +3,7 @@
 angular.module('jwtApp')
     .controller('RegisterCtrl', function ($scope, $http, API_URL, alert, $auth, $state) {
         $scope.local = {};
-        $http.get(API_URL + 'bylocation').success(function (locations) {
+        $http.get(API_URL + 'location').success(function (locations) {
             $scope.locations = locations;
         }).error(function (err) {
             if (err == null) {
@@ -16,7 +16,13 @@ angular.module('jwtApp')
         })
 
         $scope.submit = function () {
-            $auth.signup({email:$scope.email,password: $scope.password, firstname: $scope.firstname,lastname: $scope.lastname,location: $scope.local.selected})
+            $auth.signup({
+                    email: $scope.email,
+                    password: $scope.password,
+                    firstname: $scope.firstname,
+                    lastname: $scope.lastname,
+                    location: $scope.local.selected
+                })
                 .then(function (res) {
                     alert('success', 'Account Created! ', 'Welcome ' + res.data.user.email + '! You have been sent a verification email.');
                 })
