@@ -25,7 +25,14 @@
         </ui-select>
         <p></p>
         <p>Time of ride: {{ regularTime | date:'h:mm a' }}</p>
-        Hour
+
+        Hour:
+        <ui-select ng-model="selectedHour" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+            <ui-select-match placeholder="Select days...">{{$item}}</ui-select-match>
+            <ui-select-choices repeat="hour in hours | filter:$select.search">
+                {{hour}}
+            </ui-select-choices>
+        </ui-select>
         <p></p>
         Minute
         <p></p>
