@@ -13,7 +13,7 @@
         <h3>Is this a one off ride?</h3>
         <input class="form-control" type="checkbox" ng-model="oneoff"></input>
     </div>
-    <h3>Start location</h3>
+    <h3>Meeting location</h3>
     <leaflet class="form-control" markers="markers" id="mymap" defaults="defaults" center="center" height="480px"></leaflet>
     <div ng-hide="oneoff">
         <h3>Days of week</h3>
@@ -25,10 +25,9 @@
         </ui-select>
         <p></p>
         <p>Time of ride: {{ regularTime | date:'h:mm a' }}</p>
-
         Hour:
-        <ui-select ng-model="selectedHour" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
-            <ui-select-match placeholder="Select days...">{{$item}}</ui-select-match>
+        <ui-select ng-model="hour.selected" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+            <ui-select-match placeholder="Select days...">{{$select.selected}}</ui-select-match>
             <ui-select-choices repeat="hour in hours | filter:$select.search">
                 {{hour}}
             </ui-select-choices>
@@ -41,6 +40,20 @@
     <div ng-hide="!oneoff">Date and time {{ oneOffTime | date:'medium' }}</p>
         <datetimepicker data-ng-model="oneOffTime" data-datetimepicker-config="{ startView: 'day', minuteStep: 15 }" />
     </div>
+    <p></p>
+    <p>Strava Route</p>
+    <!--<div>{{stravaride.selected.map.summary_polyline}}</div>-->
+    <ui-select theme="bootstrap" ng-model="stravaride.selected" on-select="someFunction($item, $model)" required>
+        <ui-select-match placeholder="Select strava activity...">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="stravaride in stravarides | filter:{ name: $select.search }">
+            <div ng-bind-html="stravaride.name"></div>
+        </ui-select-choices>
+    </ui-select>
+
+    <div>
+        <leaflet id="stravamap" center="cen" paths="paths" layers="layers" height="480px"></leaflet>
+    </div>
+
     <div>
         <h3>Is this a private ride?</h3>
         <input class="form-control" type="checkbox" ng-model="private"></input>
