@@ -8,20 +8,25 @@ angular.module('jwtApp')
 
             $http.get(API_URL + 'bunch/stravaactivity?id=' + $scope.stravaride.selected.id).success(function (stravaride) {
                 $scope.cen = {
-                    lat: stravaride.startlat,
-                    lng: stravaride.startlng,
-                    zoom: 11
-                },
-                $scope.paths = {
-                    p1: {
-                        color: '#008000',
-                        weight: 4,
-                        latlngs: stravaride.routearray,
-                        layer: 'lines'
+                        lat: stravaride.startlat,
+                        lng: stravaride.startlng,
+                        zoom: 11
+                    },
+                    $scope.paths = {
+                        p1: {
+                            color: '#008000',
+                            weight: 4,
+                            latlngs: stravaride.routearray,
+                            layer: 'lines'
+                        }
                     }
-                }
             });
         };
+
+        $scope.minDate = new Date();
+
+        $scope.time = new Date(0, 0, 0, 5, 30, 0, 0);
+        $scope.oneofftime = new Date(0, 0, 0, 5, 30, 0, 0);
 
         $scope.center = {};
         $scope.paths = {};
@@ -79,26 +84,26 @@ angular.module('jwtApp')
             console.log(startlocation);
 
             $scope.cen = {
-                lat: $scope.startlocation.lat,
-                lng: $scope.startlocation.lng,
-                zoom: 13
-            },
-
-            $scope.center = {
-                lat: $scope.startlocation.lat,
-                lng: $scope.startlocation.lng,
-                zoom: 13
-            },
-
-            $scope.markers = {
-                mainMarker: {
                     lat: $scope.startlocation.lat,
                     lng: $scope.startlocation.lng,
-                    focus: true,
-                    message: "Where does the ride meet?",
-                    draggable: true
+                    zoom: 13
+                },
+
+                $scope.center = {
+                    lat: $scope.startlocation.lat,
+                    lng: $scope.startlocation.lng,
+                    zoom: 13
+                },
+
+                $scope.markers = {
+                    mainMarker: {
+                        lat: $scope.startlocation.lat,
+                        lng: $scope.startlocation.lng,
+                        focus: true,
+                        message: "Where does the ride meet?",
+                        draggable: true
+                    }
                 }
-            }
         });
 
         $scope.$on("leafletDirectiveMap.click", function (event, args) {

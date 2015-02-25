@@ -1,14 +1,14 @@
 <form ng-submit="submit()" name="createbunch" class="form" novalidate>
     <span us-spinner spinner-key="createSpin" spinner-start-active="false"></span>
-    <h1 class="form-signin-heading">Create a bunch.</h1>
+    <h1 class="form-signin-heading">Create a ride.</h1>
     <hr>
     <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of bunch" required>
-    <ui-select theme="bootstrap" ng-model="local.selected" required>
-        <ui-select-match placeholder="Select location...">{{$select.selected.name}}</ui-select-match>
-        <ui-select-choices repeat="local in locations | filter:{ name: $select.search }">
-            <div ng-bind-html="local.name"></div>
-        </ui-select-choices>
-    </ui-select>
+    <!--<ui-select theme="bootstrap" ng-model="local.selected" required>
+    <ui-select-match placeholder="Select location...">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="local in locations | filter:{ name: $select.search }">
+        <div ng-bind-html="local.name"></div>
+    </ui-select-choices>
+</ui-select>-->
     <div>
         <h3>Is this a one off ride?</h3>
         <input class="form-control" type="checkbox" ng-model="oneoff"></input>
@@ -24,21 +24,20 @@
             </ui-select-choices>
         </ui-select>
         <p></p>
-        <p>Time of ride: {{ regularTime | date:'h:mm a' }}</p>
-        Hour:
-        <ui-select ng-model="hour.selected" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
-            <ui-select-match placeholder="Select days...">{{$select.selected}}</ui-select-match>
-            <ui-select-choices repeat="hour in hours | filter:$select.search">
-                {{hour}}
-            </ui-select-choices>
-        </ui-select>
-        <p></p>
-        Minute
-        <p></p>
-        AM / PM
+        <p>Time of ride</p>
+        <timepicker ng-model="time" hour-step="1" minute-step="15"></timepicker>
     </div>
-    <div ng-hide="!oneoff">Date and time {{ oneOffTime | date:'medium' }}</p>
-        <datetimepicker data-ng-model="oneOffTime" data-datetimepicker-config="{ startView: 'day', minuteStep: 15 }" />
+    <div ng-hide="!oneoff">
+        <P>Date of ride</P>
+        <div style="display:inline-block; min-height:290px;">
+            <datepicker ng-model="date" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+        </div>
+        <pre>Date of ride is: <em>{{date | date:'fullDate' }}</em></pre>
+        <p class="input-group">
+            <p>Time of ride</p>
+            <timepicker ng-model="oneofftime" hour-step="1" minute-step="15"></timepicker>
+    </div>
+    </p>
     </div>
     <p></p>
     <p>Strava Route</p>
