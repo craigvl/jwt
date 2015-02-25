@@ -24,10 +24,8 @@ angular.module('jwtApp')
         };
 
         $scope.minDate = new Date();
-
         $scope.time = new Date(0, 0, 0, 5, 30, 0, 0);
         $scope.oneofftime = new Date(0, 0, 0, 5, 30, 0, 0);
-
         $scope.center = {};
         $scope.paths = {};
         $scope.cen = {};

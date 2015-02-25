@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 angular.module('jwtApp')
     .service('auth', function auth($http, API_URL, authToken, $state, $window, $q, alert) {
@@ -9,7 +9,7 @@ angular.module('jwtApp')
             $state.go('bunches');
         }
 
-       this.revokeGoogleToken = function (access_token) {
+        this.revokeGoogleToken = function (access_token) {
             return $http.get('https://accounts.google.com/o/oauth2/revoke?token=' + access_token).success(function () {}).error(function () {});
         }
 
@@ -34,4 +34,4 @@ angular.module('jwtApp')
             return deferred.promise;
         }
 
-    });
+    });*/
