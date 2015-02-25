@@ -9,7 +9,7 @@ angular.module('jwtApp')
                 //alert('success', 'welcome back ' + res.data.user.email);
                 if (res.data.user.locationid == null) {
                     alert('success', 'Please select a location ');
-                    $state.go('setlocation');
+                    $state.go('locationset');
                 }
                 usSpinnerService.stop('loginSpin');
             }).catch(handleError);

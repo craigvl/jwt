@@ -9,10 +9,10 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
         templateUrl: '/views/main.html'
     })
 
-    .state('setlocation', {
-        url: '/setlocation',
-        templateUrl: '/views/setlocation.html',
-        controller: 'SetlocationCtrl'
+    .state('locationset', {
+        url: '/locationset',
+        templateUrl: '/views/locationset.html',
+        controller: 'LocationsetCtrl'
     })
 
     .state('register', {

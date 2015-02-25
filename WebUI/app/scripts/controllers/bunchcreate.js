@@ -64,7 +64,7 @@ angular.module('jwtApp')
 
         $http.get(API_URL + 'location').success(function (locations) {
             $scope.locations = locations;
-        });
+        }).error(function () {});
 
         $http.get(API_URL + 'bunch/stravaactivities').success(function (stravarides) {
             $scope.stravarides = stravarides;
@@ -81,7 +81,7 @@ angular.module('jwtApp')
 
         $http.get(API_URL + 'location/byuser').success(function (startlocation) {
             $scope.startlocation = startlocation;
-            console.log(startlocation);
+
 
             $scope.cen = {
                     lat: $scope.startlocation.lat,
@@ -104,6 +104,8 @@ angular.module('jwtApp')
                         draggable: true
                     }
                 }
+        }).error(function () {
+            console.log('unable to get locations')
         });
 
         $scope.$on("leafletDirectiveMap.click", function (event, args) {

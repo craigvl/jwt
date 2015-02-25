@@ -9,6 +9,10 @@ angular.module('jwtApp')
             if (err == null) {
                 alert('warning', "unable to get bunches! ", "No web server?");
                 $state.go('login');
+            }
+            if (err.message == 'location_not_set') {
+                alert('warning', "Please set your location", "");
+                $state.go('locationset');
             } else {
                 alert('warning', "unable to get bunches! ", err.message);
                 $state.go('login');

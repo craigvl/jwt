@@ -2,15 +2,14 @@
 
 angular.module('jwtApp').factory('authInterceptor', function (authToken) {
     return {
-        request: function(config){
+        request: function (config) {
             var token = authToken.getToken();
-            
-            if(token)
+            if (token)
                 config.headers.Authorization = 'Bearer ' + token;
             return config;
         },
-        response: function(response) {
+        response: function (response) {
             return response;
         }
     };
-  });
+});
