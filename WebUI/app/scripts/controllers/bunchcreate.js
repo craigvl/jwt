@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert) {
+    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state) {
 
         $scope.someFunction = function (item, model) {
             console.log($scope.stravaride.selected.id);
@@ -114,13 +114,13 @@ angular.module('jwtApp')
 
         $scope.submit = function () {
 
-            console.log($scope.name);
             $http.post(API_URL + 'bunch/create', {
                 name: $scope.name
             }).success(function () {
-                alert('success', "bunch created", '');
+                alert('success', "Ride created", '');
+                $state.go('bunches');
             }).error(function (err) {
-                alert('warning', "Unable to connect to google?", '');
+                alert('warning', "Unable to create ride?", '');
             });
 
             console.log($scope.oneoff);

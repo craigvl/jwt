@@ -67,6 +67,7 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
 
     $authProvider.loginUrl = API_URL + 'auth/login';
     $authProvider.signupUrl = API_URL + 'auth/register';
+    $authProvider.loginRedirect = '/bunches';
 
     $httpProvider.interceptors.push('authInterceptor');
     $httpProvider.defaults.useXDomain = true;
