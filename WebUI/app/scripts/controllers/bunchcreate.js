@@ -1,7 +1,21 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state) {
+    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state, $auth, usSpinnerService) {
+
+        $scope.stravaAuth = function () {
+            usSpinnerService.spin('loginSpin');
+            $auth.link('strava', $auth.getPayload()).then(function (res) {
+                //alert('success', 'welcome back ' + res.data.user.email);
+                if (res.data.user.locationid == null) {
+                    alert('success', 'Please select a location ');
+                    $state.go('locationset');
+                }
+                $scope.isstravaauth = true;
+                usSpinnerService.stop('loginSpin');
+            }).catch();
+
+        };
 
         $scope.someFunction = function (item, model) {
             console.log($scope.stravaride.selected.id);
@@ -20,9 +34,12 @@ angular.module('jwtApp')
                             layer: 'lines'
                         }
                     }
-            });
+            }).error(function (err) {
+                alert('warning', "Strava activities! ", err.message);
+            })
         };
 
+        $scope.isstravaauth = {};
         $scope.minDate = new Date();
         $scope.time = new Date(0, 0, 0, 5, 30, 0, 0);
         $scope.oneofftime = new Date(0, 0, 0, 5, 30, 0, 0);
@@ -74,13 +91,14 @@ angular.module('jwtApp')
                     layer: 'lines'
                 }
             }
-
+            $scope.isstravaauth = true;
+        }).error(function (err) {
+            alert('warning', "Strava activities! ", err.message);
+            $scope.isstravaauth = false;
         });
 
         $http.get(API_URL + 'location/byuser').success(function (startlocation) {
             $scope.startlocation = startlocation;
-
-
             $scope.cen = {
                     lat: $scope.startlocation.lat,
                     lng: $scope.startlocation.lng,

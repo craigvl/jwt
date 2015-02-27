@@ -35,6 +35,6 @@ angular.module('jwtApp')
             console.log(err.data);
             console.log(err.message);
             usSpinnerService.stop('loginSpin');
-            alert('warning', 'something went wrong! ', err.message);
+            alert('warning', 'something went wrong! ', err.data.message);
         }
     });
