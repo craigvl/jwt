@@ -3,23 +3,48 @@
 angular.module('jwtApp')
     .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state, $auth, usSpinnerService) {
 
+        $scope.getStravaActivities = function () {
+            $scope.showmap = false;
+            //alert('warning', "Strava activities! ", '');
+            $http.get(API_URL + 'bunch/stravaactivities').success(function (stravarides) {
+                console.log(stravarides);
+                $scope.stravarides = stravarides;
+                $scope.paths = {
+                    p1: {
+                        color: '#008000',
+                        weight: 4,
+                        latlngs: stravarides[1].routearray,
+                        layer: 'lines'
+                    }
+                }
+                $scope.isstravaauth = true;
+                $scope.showmap = true;
+            }).error(function (err) {
+                $scope.isstravaauth = false;
+                $scope.showmap = false;
+            });
+        };
+
         $scope.stravaAuth = function () {
-            usSpinnerService.spin('loginSpin');
+            usSpinnerService.spin('createSpin');
             $auth.link('strava', $auth.getPayload()).then(function (res) {
                 //alert('success', 'welcome back ' + res.data.user.email);
                 if (res.data.user.locationid == null) {
                     alert('success', 'Please select a location ');
                     $state.go('locationset');
                 }
-                $scope.isstravaauth = true;
-                usSpinnerService.stop('loginSpin');
+                $http.get(API_URL + 'location').success(function (locations) {
+                    $scope.locations = locations;
+                }).error(function () {});
+
+                $scope.getStravaActivities();
+                usSpinnerService.stop('createSpin');
             }).catch();
 
         };
 
-        $scope.someFunction = function (item, model) {
-            console.log($scope.stravaride.selected.id);
-
+        $scope.getStravaRoute = function () {
+            usSpinnerService.spin('createSpin');
             $http.get(API_URL + 'bunch/stravaactivity?id=' + $scope.stravaride.selected.id).success(function (stravaride) {
                 $scope.cen = {
                         lat: stravaride.startlat,
@@ -34,11 +59,13 @@ angular.module('jwtApp')
                             layer: 'lines'
                         }
                     }
+                usSpinnerService.stop('createSpin');
             }).error(function (err) {
                 alert('warning', "Strava activities! ", err.message);
             })
         };
 
+        $scope.showmap = {};
         $scope.isstravaauth = {};
         $scope.minDate = new Date();
         $scope.time = new Date(0, 0, 0, 5, 30, 0, 0);
@@ -81,21 +108,7 @@ angular.module('jwtApp')
             $scope.locations = locations;
         }).error(function () {});
 
-        $http.get(API_URL + 'bunch/stravaactivities').success(function (stravarides) {
-            $scope.stravarides = stravarides;
-            $scope.paths = {
-                p1: {
-                    color: '#008000',
-                    weight: 4,
-                    latlngs: stravarides[1].routearray,
-                    layer: 'lines'
-                }
-            }
-            $scope.isstravaauth = true;
-        }).error(function (err) {
-            alert('warning', "Strava activities! ", err.message);
-            $scope.isstravaauth = false;
-        });
+        $scope.getStravaActivities();
 
         $http.get(API_URL + 'location/byuser').success(function (startlocation) {
             $scope.startlocation = startlocation;

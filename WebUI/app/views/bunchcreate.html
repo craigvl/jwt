@@ -1,5 +1,5 @@
 <form ng-submit="submit()" name="createbunch" class="form" novalidate>
-    <span us-spinner spinner-key="createSpin" spinner-start-active="false"></span>
+
     <h1 class="form-signin-heading">Create a ride.</h1>
     <hr>
     <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of bunch" required>
@@ -41,10 +41,13 @@
     </div>
     <p></p>
 
-    <div ng-show="isstravaauth">
+    <div ng-show="isstravaauth && !showmap">Loading strava routes......
+    </div>
+
+    <div ng-show="isstravaauth && showmap">
         <p>Strava Route</p>
         <!--<div>{{stravaride.selected.map.summary_polyline}}</div>-->
-        <ui-select theme="bootstrap" ng-model="stravaride.selected" on-select="someFunction($item, $model)" required>
+        <ui-select theme="bootstrap" ng-model="stravaride.selected" on-select="getStravaRoute()" required>
             <ui-select-match placeholder="Select strava activity...">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices repeat="stravaride in stravarides | filter:{ name: $select.search }">
                 <div ng-bind-html="stravaride.name"></div>
@@ -59,7 +62,9 @@
     <div ng-show="!isstravaauth">
         <button type="button" class="btn btn-success" ng-click="stravaAuth();">Login with strava to add routes</button>
     </div>
-
+    <div>
+        <span us-spinner spinner-key="createSpin" spinner-start-active="false"></span>
+    </div>
     <div>
         <h3>Is this a private ride?</h3>
         <input class="form-control" type="checkbox" ng-model="private"></input>
