@@ -3,6 +3,20 @@
 angular.module('jwtApp')
     .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state, $auth, usSpinnerService) {
 
+        $scope.addRoute = function () {
+
+            $scope.routes.push({
+                name: $scope.stravaride.selected.name
+            });
+
+        };
+
+        $scope.deleteRoute = function (idx) {
+
+            $scope.routes.splice(idx, 1);
+
+        };
+
         $scope.getStravaActivities = function () {
             $scope.showmap = false;
             //alert('warning', "Strava activities! ", '');
@@ -65,6 +79,7 @@ angular.module('jwtApp')
             })
         };
 
+        $scope.routes = [];
         $scope.showmap = {};
         $scope.isstravaauth = {};
         $scope.minDate = new Date();

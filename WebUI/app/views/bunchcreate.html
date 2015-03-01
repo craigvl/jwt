@@ -2,7 +2,9 @@
 
     <h1 class="form-signin-heading">Create a ride.</h1>
     <hr>
-    <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of bunch" required>
+    <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of bunch" required />
+    <p></p>
+    <textarea name="desc" ng-model="desc" type="desc" class="form-control" placeholder="Description" required />
     <!--<ui-select theme="bootstrap" ng-model="local.selected" required>
     <ui-select-match placeholder="Select location...">{{$select.selected.name}}</ui-select-match>
     <ui-select-choices repeat="local in locations | filter:{ name: $select.search }">
@@ -45,6 +47,7 @@
     </div>
 
     <div ng-show="isstravaauth && showmap">
+
         <p>Strava Route</p>
         <!--<div>{{stravaride.selected.map.summary_polyline}}</div>-->
         <ui-select theme="bootstrap" ng-model="stravaride.selected" on-select="getStravaRoute()" required>
@@ -57,7 +60,17 @@
         <div>
             <leaflet id="stravamap" center="cen" paths="paths" layers="layers" height="480px"></leaflet>
         </div>
+        <p></p>
+        <button type="button" ng-disabled="stravaride.selected == undefined" class="btn btn-success" ng-click="addRoute();">Add route</button>
+
+        <div ng-repeat="route in routes">
+            <p></p>
+            {{ route.name }} <a ng-click="deleteRoute($index)">Remove route</a>
+        </div>
+
     </div>
+
+
 
     <div ng-show="!isstravaauth">
         <button type="button" class="btn btn-success" ng-click="stravaAuth();">Login with strava to add routes</button>
