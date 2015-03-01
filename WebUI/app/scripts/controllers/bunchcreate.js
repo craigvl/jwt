@@ -137,8 +137,20 @@ angular.module('jwtApp')
 
         $scope.submit = function () {
 
+            var startlocation = [{
+                lat: $scope.markers.mainMarker.lat,
+                lng: $scope.markers.mainMarker.lng
+            }]
+
+            var daysofweeks = [{}];
+
             $http.post(API_URL + 'bunch/create', {
-                name: $scope.name
+                name: $scope.name,
+                desc: $scope.desc,
+                oneoff: $scope.oneoff,
+                startlocation: startlocation,
+                daysofweek: $scope.multipleSelect.days,
+                time: $scope.time
             }).success(function () {
                 alert('success', "Ride created", '');
                 $state.go('bunches');
@@ -150,6 +162,6 @@ angular.module('jwtApp')
             console.log($scope.regularTime);
             console.log($scope.oneOffTime);
             console.log($scope.multipleSelect.days);
-            console.log($scope.hour);
+            console.log($scope.time);
         }
     });
