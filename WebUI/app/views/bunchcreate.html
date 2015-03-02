@@ -13,7 +13,7 @@
 </ui-select>-->
     <div>
         <h3>Is this a one off ride?</h3>
-        <input class="form-control" type="checkbox" ng-model="oneoff"></input>
+        <input type="checkbox" ng-model="oneoff"></input>
     </div>
     <h3>Meeting location</h3>
     <leaflet class="form-control" markers="markers" id="mymap" defaults="defaults" center="center" height="480px"></leaflet>
@@ -70,8 +70,6 @@
 
     </div>
 
-
-
     <div ng-show="!isstravaauth">
         <button type="button" class="btn btn-success" ng-click="stravaAuth();">Login with strava to add routes</button>
     </div>
@@ -80,7 +78,7 @@
     </div>
     <div>
         <h3>Is this a private ride?</h3>
-        <input class="form-control" type="checkbox" ng-model="private"></input>
+        <input type="checkbox" ng-model="private"></input>
     </div>
     <p></p>
     <button ng-click="" ng-disabled="register.$invalid" class="btn btn-lg btn-success btn-block" type="submit">

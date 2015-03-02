@@ -1,36 +1,22 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state, $auth, usSpinnerService) {
+    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state, $auth, usSpinnerService, stravaServices, locationServices) {
 
         $scope.addRoute = function () {
-
             $scope.routes.push({
                 name: $scope.stravaride.selected.name
             });
-
         };
 
         $scope.deleteRoute = function (idx) {
-
             $scope.routes.splice(idx, 1);
-
         };
 
         $scope.getStravaActivities = function () {
             $scope.showmap = false;
-            //alert('warning', "Strava activities! ", '');
-            $http.get(API_URL + 'bunch/stravaactivities').success(function (stravarides) {
-                console.log(stravarides);
+            stravaServices.getStravaActivities().success(function (stravarides) {
                 $scope.stravarides = stravarides;
-                $scope.paths = {
-                    p1: {
-                        color: '#008000',
-                        weight: 4,
-                        latlngs: stravarides[1].routearray,
-                        layer: 'lines'
-                    }
-                }
                 $scope.isstravaauth = true;
                 $scope.showmap = true;
             }).error(function (err) {
@@ -42,24 +28,17 @@ angular.module('jwtApp')
         $scope.stravaAuth = function () {
             usSpinnerService.spin('createSpin');
             $auth.link('strava', $auth.getPayload()).then(function (res) {
-                //alert('success', 'welcome back ' + res.data.user.email);
-                if (res.data.user.locationid == null) {
-                    alert('success', 'Please select a location ');
-                    $state.go('locationset');
-                }
-                $http.get(API_URL + 'location').success(function (locations) {
-                    $scope.locations = locations;
-                }).error(function () {});
-
                 $scope.getStravaActivities();
                 usSpinnerService.stop('createSpin');
-            }).catch();
-
+            }).catch(function (err) {
+                alert('warning', "Unable to connect to Strava! ", '', 4000);
+                usSpinnerService.stop('createSpin');
+            });
         };
 
         $scope.getStravaRoute = function () {
             usSpinnerService.spin('createSpin');
-            $http.get(API_URL + 'bunch/stravaactivity?id=' + $scope.stravaride.selected.id).success(function (stravaride) {
+            stravaServices.getStravaActivity($scope.stravaride.selected.id).success(function (stravaride) {
                 $scope.cen = {
                         lat: stravaride.startlat,
                         lng: stravaride.startlng,
@@ -119,13 +98,9 @@ angular.module('jwtApp')
             }
         };
 
-        $http.get(API_URL + 'location').success(function (locations) {
-            $scope.locations = locations;
-        }).error(function () {});
-
         $scope.getStravaActivities();
 
-        $http.get(API_URL + 'location/byuser').success(function (startlocation) {
+        locationServices.getUserLocation().success(function (startlocation) {
             $scope.startlocation = startlocation;
             $scope.cen = {
                     lat: $scope.startlocation.lat,
@@ -149,7 +124,9 @@ angular.module('jwtApp')
                     }
                 }
         }).error(function () {
-            console.log('unable to get locations')
+            console.log('unable to get locations');
+            alert('success', 'Please select a location');
+            $state.go('locationset');
         });
 
         $scope.$on("leafletDirectiveMap.click", function (event, args) {
