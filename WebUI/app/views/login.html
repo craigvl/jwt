@@ -1,5 +1,5 @@
 <form ng-submit="submit()" name="register" class="form-signin" novalidate>
-    <span us-spinner spinner-key="loginSpin" spinner-start-active="false"></span>
+    <span style="position: absolute;display: block;top: 50%;left: 50%;" us-spinner="{radius:20, width:8, length: 16, color:'#8dc63f'}" spinner-key="loginSpin" spinner-start-active="false"></span>
     <h1 class="form-signin-heading text-muted">Login</h1>
     <input name="email" ng-model="email" type="email" class="form-control" placeholder="Email address" required>
     <p class="help-block" ng-show="register.email.$dirty && register.email.$invalid">Please enter a valid email address</p>
