@@ -5,7 +5,9 @@ angular.module('jwtApp')
 
         $scope.addRoute = function () {
             $scope.routes.push({
-                name: $scope.stravaride.selected.name
+                name: $scope.stravaride.selected.name,
+                activityid: $scope.stravaride.selected.id,
+                path: $scope.paths.p1.latlngs
             });
         };
 
@@ -150,7 +152,10 @@ angular.module('jwtApp')
                 oneoff: $scope.oneoff,
                 startlocation: startlocation,
                 daysofweek: $scope.multipleSelect.days,
-                time: $scope.time
+                time: $scope.time,
+                routes: $scope.routes,
+                oneoffdate: $scope.oneoffdate,
+                private: $scope.private
             }).success(function () {
                 alert('success', "Ride created", '');
                 $state.go('bunches');

@@ -7,7 +7,7 @@
     <hr>
     <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of bunch" required />
     <p></p>
-    <textarea name="desc" ng-model="desc" type="desc" class="form-control" placeholder="Description" required />
+    <textarea name="desc" ng-model="desc" type="desc" class="form-control" placeholder="Description" />
     <div>
         <h3>Is this a one off ride?</h3>
         <input type="checkbox" ng-model="oneoff"></input>
@@ -23,18 +23,18 @@
             </ui-select-choices>
         </ui-select>
         <p></p>
+    </div>
+    <p></p>
+    <div>
         <p>Time of ride</p>
         <timepicker ng-model="time" hour-step="1" minute-step="15"></timepicker>
     </div>
     <div ng-hide="!oneoff">
         <P>Date of ride</P>
         <div style="display:inline-block; min-height:290px;">
-            <datepicker ng-model="date" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+            <datepicker ng-model="oneoffdate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
         </div>
-        <pre>Date of ride is: <em>{{date | date:'fullDate' }}</em></pre>
-        <p class="input-group">
-            <p>Time of ride</p>
-            <timepicker ng-model="oneofftime" hour-step="1" minute-step="15"></timepicker>
+        <pre>Date of ride is: <em>{{oneoffdate | date:'fullDate' }}</em></pre>
     </div>
     </p>
     </div>
@@ -47,7 +47,7 @@
 
         <p>Strava Route</p>
         <!--<div>{{stravaride.selected.map.summary_polyline}}</div>-->
-        <ui-select theme="bootstrap" ng-model="stravaride.selected" on-select="getStravaRoute()" required>
+        <ui-select theme="bootstrap" ng-model="stravaride.selected" on-select="getStravaRoute()">
             <ui-select-match placeholder="Select strava activity...">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices repeat="stravaride in stravarides | filter:{ name: $select.search }">
                 <div ng-bind-html="stravaride.name"></div>
@@ -76,7 +76,7 @@
         <input type="checkbox" ng-model="private"></input>
     </div>
     <p></p>
-    <button ng-click="" ng-disabled="register.$invalid" class="btn btn-lg btn-success btn-block" type="submit">
+    <button ng-click="" ng-disabled="createbunch.$invalid" class="btn btn-lg btn-success btn-block" type="submit">
         Create
     </button>
     <br />
