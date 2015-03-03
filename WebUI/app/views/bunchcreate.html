@@ -13,7 +13,7 @@
         <input type="checkbox" ng-model="oneoff"></input>
     </div>
     <h3>Meeting location</h3>
-    <leaflet class="form-control" markers="markers" id="mymap" defaults="defaults" center="center" height="480px"></leaflet>
+    <leaflet class="form-control" markers="markers" id="mymap" defaults="defaults" center="center" height="380px"></leaflet>
     <div ng-hide="oneoff">
         <h3>Days of week</h3>
         <ui-select multiple ng-model="multipleSelect.days" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
@@ -55,7 +55,7 @@
         </ui-select>
 
         <div>
-            <leaflet id="stravamap" center="cen" paths="paths" layers="layers" height="480px"></leaflet>
+            <leaflet id="stravamap" center="cen" paths="paths" layers="layers" height="380px"></leaflet>
         </div>
         <p></p>
         <button type="button" ng-disabled="stravaride.selected == undefined" class="btn btn-success" ng-click="addRoute();">Add route</button>
