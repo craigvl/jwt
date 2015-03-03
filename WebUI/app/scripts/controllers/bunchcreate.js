@@ -81,12 +81,11 @@ angular.module('jwtApp')
         $scope.layers = {
             baselayers: {
                 osm: {
-                    name: 'OpenStreetMap',
+                    name: 'mapbox',
                     type: 'xyz',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    url: 'http://a.tiles.mapbox.com/v4/craigvl.lc6j9gf5/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY3JhaWd2bCIsImEiOiJTSEt3NFE0In0.uqpehJUakJt_dPUiaTKLag',
                     layerOptions: {
                         subdomains: ['a', 'b', 'c'],
-                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                         continuousWorld: true
                     }
                 }
@@ -99,6 +98,10 @@ angular.module('jwtApp')
                 }
             }
         };
+
+        $scope.defaults = {
+            tileLayer: "http://a.tiles.mapbox.com/v4/craigvl.lc6j9gf5/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY3JhaWd2bCIsImEiOiJTSEt3NFE0In0.uqpehJUakJt_dPUiaTKLag",
+        }
 
         $scope.getStravaActivities();
 
