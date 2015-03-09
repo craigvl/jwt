@@ -29,11 +29,11 @@
     </div>
     <p></p>
     <div>
-        <p>Time of ride</p>
+        <h3>Time of ride</h3>
         <timepicker ng-model="time" hour-step="1" minute-step="15"></timepicker>
     </div>
     <div ng-hide="oneoffradio == 'No'">
-        <P>Date of ride</P>
+        <h3>Date of ride</h3>
         <div style="display:inline-block; min-height:290px;">
             <datepicker ng-model="oneoffdate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
         </div>
@@ -48,7 +48,7 @@
 
     <div ng-show="isstravaauth && showmap">
 
-        <p>Strava Route</p>
+        <h3>Strava Route</h3>
         <!--<div>{{stravaride.selected.map.summary_polyline}}</div>-->
         <ui-select theme="bootstrap" ng-model="stravaride.selected" on-select="getStravaRoute()">
             <ui-select-match placeholder="Select strava activity...">{{$select.selected.name}}</ui-select-match>

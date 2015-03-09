@@ -162,6 +162,12 @@ angular.module('jwtApp')
                 $scope.private = false;
             }
 
+            if ($scope.sponsoredradio == 'Yes') {
+                $scope.sponsored = true;
+            } else {
+                $scope.sponsored = false;
+            }
+
             var daysofweeks = [{}];
 
             $http.post(API_URL + 'bunch/create', {
@@ -173,7 +179,9 @@ angular.module('jwtApp')
                 time: $scope.time,
                 routes: $scope.routes,
                 oneoffdate: $scope.oneoffdate,
-                private: $scope.private
+                private: $scope.private,
+                sponsored: $scope.sponsored,
+                sponsorname: $scope.sponsorname
             }).success(function () {
                 alert('success', "Ride created", '');
                 $state.go('bunches');
