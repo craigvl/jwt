@@ -76,7 +76,10 @@ angular.module('jwtApp')
         $scope.multipleSelect = {};
         $scope.multipleSelect.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $scope.oneoff = false;
+        $scope.oneoffradio = 'No';
+        $scope.privateradio = 'No';
         $scope.private = false;
+        $scope.sponsoredradio = 'No';
 
         $scope.layers = {
             baselayers: {
@@ -146,6 +149,18 @@ angular.module('jwtApp')
                 lat: $scope.markers.mainMarker.lat,
                 lng: $scope.markers.mainMarker.lng
             }]
+
+            if ($scope.oneoffradio == 'Yes') {
+                $scope.oneoff = true;
+            } else {
+                $scope.oneoff = false;
+            }
+
+            if ($scope.privateradio == 'Yes') {
+                $scope.private = true;
+            } else {
+                $scope.private = false;
+            }
 
             var daysofweeks = [{}];
 

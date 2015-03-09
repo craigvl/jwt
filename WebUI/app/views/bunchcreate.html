@@ -5,16 +5,19 @@
 
     <h1 class="form-signin-heading">Create a ride.</h1>
     <hr>
-    <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of bunch" required />
+    <input name="name" ng-model="name" type="text" class="form-control" placeholder="Name of ride" required />
     <p></p>
     <textarea name="desc" ng-model="desc" type="desc" class="form-control" placeholder="Description" />
     <div>
-        <h3>Is this a one off ride?</h3>
-        <input type="checkbox" ng-model="oneoff"></input>
     </div>
     <h3>Meeting location</h3>
-    <leaflet class="form-control" markers="markers" id="mymap" defaults="defaults" center="center" height="380px"></leaflet>
-    <div ng-hide="oneoff">
+    <leaflet class="form-control" markers="markers" id="meetinglocation" defaults="defaults" center="center" height="380px" ng-click="logLeafletData('meetinglocation')"></leaflet>
+    <div class="btn-group">
+        <h3>Is this a one off ride? {{oneoffradio || 'null'}}</h3>
+        <label class="btn btn-success" ng-model="oneoffradio" btn-radio="'Yes'">Yes</label>
+        <label class="btn btn-success" ng-model="oneoffradio" btn-radio="'No'">No</label>
+    </div>
+    <div ng-hide="oneoffradio == 'Yes'">
         <h3>Days of week</h3>
         <ui-select multiple ng-model="multipleSelect.days" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
             <ui-select-match placeholder="Select days...">{{$item}}</ui-select-match>
@@ -29,7 +32,7 @@
         <p>Time of ride</p>
         <timepicker ng-model="time" hour-step="1" minute-step="15"></timepicker>
     </div>
-    <div ng-hide="!oneoff">
+    <div ng-hide="oneoffradio == 'No'">
         <P>Date of ride</P>
         <div style="display:inline-block; min-height:290px;">
             <datepicker ng-model="oneoffdate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
@@ -72,9 +75,28 @@
     </div>
 
     <div>
-        <h3>Is this a private ride?</h3>
-        <input type="checkbox" ng-model="private"></input>
+        <div class="btn-group">
+            <h3>Is this a private ride? {{privateradio || 'null'}}</h3>
+            <label class="btn btn-success" ng-model="privateradio" btn-radio="'Yes'">Yes</label>
+            <label class="btn btn-success" ng-model="privateradio" btn-radio="'No'">No</label>
+        </div>
     </div>
+
+    <div>
+        <div class="btn-group">
+            <h3>Is this ride sponsored? {{sponsoredradio || 'null'}}</h3>
+            <label class="btn btn-success" ng-model="sponsoredradio" btn-radio="'Yes'">Yes</label>
+            <label class="btn btn-success" ng-model="sponsoredradio" btn-radio="'No'">No</label>
+        </div>
+    </div>
+    <p></p>
+    <div ng-hide="sponsoredradio == 'No'">
+        <input name="sponsorname" ng-model="sponsorname" type="text" class="form-control" placeholder="Sponsored by" />
+        <div>
+            <leaflet id="sponsormap" markers="sponsormarkers" center="cen" paths="paths" layers="layers" height="380px" ng-click="logLeafletData('sponsormap')"></leaflet>
+        </div>
+    </div>
+
     <p></p>
     <button ng-click="" ng-disabled="createbunch.$invalid" class="btn btn-lg btn-success btn-block" type="submit">
         Create
