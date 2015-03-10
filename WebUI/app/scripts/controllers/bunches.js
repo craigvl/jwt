@@ -5,7 +5,33 @@ angular.module('jwtApp')
 
         var dayofweektoday = new moment().format('dddd');
 
+        $http.get(API_URL + 'bunch/byuserandday?id=' + dayofweektoday).success(function (bunches) {
+            $scope.bunches = bunches;
 
+            angular.forEach(bunches, function (bunch, key) {
+                console.log(bunch.startlocation[0].lat);
+                $scope.markers.push({
+                    lat: bunch.startlocation[0].lat,
+                    lng: bunch.startlocation[0].lng,
+                    message: bunch.name,
+                    layer: 'rides',
+                    zoom: 8
+                });
+
+            });
+        }).error(function (err) {
+            if (err == null) {
+                alert('warning', "unable to get bunches! ", "No web server?");
+                $state.go('login');
+            }
+            if (err.message == 'location_not_set') {
+                alert('warning', "Please set your location", "");
+                $state.go('locationset');
+            } else {
+                alert('warning', "unable to get bunches! ", err.message);
+                $state.go('login');
+            }
+        });
 
         rideServices.getUserRides().success(function (rides) {
             $scope.rides = rides;
@@ -54,8 +80,8 @@ angular.module('jwtApp')
 
         var today = new moment();
         console.log(today.day());
-
         $scope.tabs[today.day()].active = true;
+
 
         $scope.tabclick = function (active) {
             $scope.bunches = [];
@@ -88,7 +114,7 @@ angular.module('jwtApp')
                 }
             });
 
-            alert('success', active.title);
+            //alert('success', active.title);
             $scope.rides = [];
         }
 
