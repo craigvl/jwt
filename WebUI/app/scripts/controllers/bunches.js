@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('BunchesCtrl', function ($scope, $http, API_URL, alert, $state, usSpinnerService, leafletData, locationServices) {
+    .controller('BunchesCtrl', function ($scope, $http, API_URL, alert, $state, usSpinnerService, leafletData, locationServices, rideServices) {
 
         $http.get(API_URL + 'bunch/byuser/').success(function (bunches) {
             $scope.bunches = bunches;
-
+            console.log(bunches);
             angular.forEach(bunches, function (bunch, key) {
 
                 $scope.markers.push({
@@ -17,10 +17,6 @@ angular.module('jwtApp')
                 });
 
             });
-
-            //$scope.markers.push(m1);
-
-
         }).error(function (err) {
             if (err == null) {
                 alert('warning', "unable to get bunches! ", "No web server?");
@@ -35,6 +31,12 @@ angular.module('jwtApp')
             }
         });
 
+        /* rideServices.getUserRides().success(function (rides) {
+     $scope.rides = rides;
+     console.log(rides);
+ }).error(function () {
+     console.log('unable to get rides');
+ });*/
         $scope.addBunch = function () {
             usSpinnerService.spin('loginSpin');
             $state.go('bunchcreate');
