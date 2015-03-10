@@ -31,12 +31,13 @@ angular.module('jwtApp')
             }
         });
 
-        /* rideServices.getUserRides().success(function (rides) {
-     $scope.rides = rides;
-     console.log(rides);
- }).error(function () {
-     console.log('unable to get rides');
- });*/
+        rideServices.getUserRides().success(function (rides) {
+            $scope.rides = rides;
+            console.log(rides);
+        }).error(function () {
+            console.log('unable to get rides');
+        });
+
         $scope.addBunch = function () {
             usSpinnerService.spin('loginSpin');
             $state.go('bunchcreate');
