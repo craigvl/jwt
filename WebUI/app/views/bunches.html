@@ -4,4 +4,11 @@
 <h1>Rides</h1>
 <leaflet class="form-control" markers="markers" layers="layers" id="mymap" defaults="defaults" center="center" height="380px"></leaflet>
 <p></p>
-<div ride-summary rides="rides"></div>
+
+<tabset>
+    <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="tabclick(tab)" disabled="tab.disabled">
+        <div ng-include="'views/tabcontent.html'"></div>
+    </tab>
+</tabset>
+
+<!--<div ride-summary rides="rides"></div>-->

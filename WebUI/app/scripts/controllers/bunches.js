@@ -1,35 +1,11 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('BunchesCtrl', function ($scope, $http, API_URL, alert, $state, usSpinnerService, leafletData, locationServices, rideServices) {
+    .controller('BunchesCtrl', function ($scope, $http, API_URL, alert, $state, usSpinnerService, leafletData, locationServices, rideServices, moment) {
 
-        $http.get(API_URL + 'bunch/byuser/').success(function (bunches) {
-            $scope.bunches = bunches;
-            console.log(bunches);
-            angular.forEach(bunches, function (bunch, key) {
+        var dayofweektoday = new moment().format('dddd');
 
-                $scope.markers.push({
-                    lat: bunch.startlocation[0].lat,
-                    lng: bunch.startlocation[0].lng,
-                    message: bunch.name,
-                    layer: 'rides',
-                    zoom: 8
-                });
 
-            });
-        }).error(function (err) {
-            if (err == null) {
-                alert('warning', "unable to get bunches! ", "No web server?");
-                $state.go('login');
-            }
-            if (err.message == 'location_not_set') {
-                alert('warning', "Please set your location", "");
-                $state.go('locationset');
-            } else {
-                alert('warning', "unable to get bunches! ", err.message);
-                $state.go('login');
-            }
-        });
 
         rideServices.getUserRides().success(function (rides) {
             $scope.rides = rides;
@@ -45,6 +21,76 @@ angular.module('jwtApp')
 
         $scope.center = {};
         $scope.markers = [];
+
+        $scope.tabs = [
+            {
+                title: 'Sunday'
+            },
+            {
+                title: 'Monday'
+            },
+            {
+                title: 'Tuesday'
+            },
+            {
+                title: 'Wednesday'
+            },
+            {
+                title: 'Thursday'
+            },
+            {
+                title: 'Friday'
+            },
+            {
+                title: 'Saturday'
+            }
+        ];
+
+        $scope.activetab = function () {
+            return $scope.tabs.filter(function (tab) {
+                return tab.active;
+            })[0];
+        };
+
+        var today = new moment();
+        console.log(today.day());
+
+        $scope.tabs[today.day()].active = true;
+
+        $scope.tabclick = function (active) {
+            $scope.bunches = [];
+            $scope.markers = [];
+            $http.get(API_URL + 'bunch/byuserandday?id=' + active.title).success(function (bunches) {
+                $scope.bunches = bunches;
+
+                angular.forEach(bunches, function (bunch, key) {
+                    console.log(bunch.startlocation[0].lat);
+                    $scope.markers.push({
+                        lat: bunch.startlocation[0].lat,
+                        lng: bunch.startlocation[0].lng,
+                        message: bunch.name,
+                        layer: 'rides',
+                        zoom: 8
+                    });
+
+                });
+            }).error(function (err) {
+                if (err == null) {
+                    alert('warning', "unable to get bunches! ", "No web server?");
+                    $state.go('login');
+                }
+                if (err.message == 'location_not_set') {
+                    alert('warning', "Please set your location", "");
+                    $state.go('locationset');
+                } else {
+                    alert('warning', "unable to get bunches! ", err.message);
+                    $state.go('login');
+                }
+            });
+
+            alert('success', active.title);
+            $scope.rides = [];
+        }
 
         $scope.layers = {
             baselayers: {
