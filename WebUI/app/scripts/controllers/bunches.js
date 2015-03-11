@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('BunchesCtrl', function ($scope, $http, API_URL, alert, $state, usSpinnerService, leafletData, locationServices, rideServices, bunchServices, moment) {
+    .controller('BunchesCtrl', function ($scope, $http, API_URL, alert, $state, usSpinnerService, leafletData, locationServices, rideServices, bunchServices, dateServices, moment) {
 
         var dayofweektoday = new moment().format('dddd');
 
@@ -86,20 +86,22 @@ angular.module('jwtApp')
         console.log(today.day());
         $scope.tabs[today.day()].active = true;
 
+        $scope.dayofweekdisplay = today.toDate();
 
         $scope.tabclick = function (active) {
             $scope.bunches = [];
             $scope.markers = [];
 
+            var adddays = dateServices.DaysToAdd(dateServices.GetDayNumber(moment().format('dddd')), dateServices.GetDayNumber(active.title));
+            $scope.dayofweekdisplay = (moment().add(adddays, 'd').toDate());
             getBunches(active.title);
 
-/*rideServices.getUserRides().success(function (rides) {
-    $scope.rides = rides;
-    console.log(rides);
-}).error(function () {
-    console.log('unable to get rides');
-});*/
-
+            /*rideServices.getUserRides().success(function (rides) {
+                $scope.rides = rides;
+                console.log(rides);
+            }).error(function () {
+                console.log('unable to get rides');
+            });*/
 
             $scope.rides = [];
         }
