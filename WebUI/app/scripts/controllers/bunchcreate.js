@@ -75,7 +75,7 @@ angular.module('jwtApp')
         $scope.stravaride = {};
         $scope.hours = ['1', '2', '3', '4', '5', '6', '7'];
         $scope.multipleSelect = {};
-        $scope.multipleSelect.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        $scope.multipleSelect.days = ['Tuesday', 'Thursday'];
         $scope.oneoff = false;
         $scope.oneoffradio = 'No';
         $scope.privateradio = 'No';

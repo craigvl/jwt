@@ -8,6 +8,7 @@ angular.module('jwtApp')
         function getBunches(dayofweek) {
             bunchServices.getBunchesByUserandDay(dayofweek).success(function (bunches) {
                 $scope.bunches = bunches;
+                console.log($scope.bunches);
                 angular.forEach(bunches, function (bunch, key) {
                     $scope.markers.push({
                         lat: bunch.startlocation[0].lat,
@@ -79,6 +80,8 @@ angular.module('jwtApp')
             $scope.markers = [];
             getBunches(dayofweektoday);
             getBunchesOneOff(dayofweektoday, dayofyear.dayOfYear());
+            $scope.tabs[today.day()].active = true;
+            $scope.dayofweekdisplay = today.toDate();
         };
 
         $scope.addBunch = function () {
@@ -122,9 +125,7 @@ angular.module('jwtApp')
         var today = new moment();
 
         $scope.tabs[today.day()].active = true;
-
         $scope.dayofweekdisplay = today.toDate();
-
         $scope.tabclick = function (active) {
             $scope.bunches = [];
             $scope.markers = [];
@@ -142,7 +143,7 @@ angular.module('jwtApp')
                 console.log('unable to get rides');
             });*/
 
-            $scope.rides = [];
+            //$scope.rides = [];
         }
 
         $scope.layers = {
@@ -171,7 +172,7 @@ angular.module('jwtApp')
             $scope.center = {
                 lat: $scope.startlocation.lat,
                 lng: $scope.startlocation.lng,
-                zoom: 13
+                zoom: 12
             };
         }).error(function () {
             console.log('unable to get locations');
