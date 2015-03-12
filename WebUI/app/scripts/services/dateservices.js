@@ -12,25 +12,25 @@ angular.module('jwtApp')
                 return (desireddayofweek - currentdayofweek);
             },
             GetDayNumber: function (dayname) {
-                if (dayname.toLowerCase() == 'sunday') {
+                if (dayname.toLowerCase() == 'sunday' || dayname.toLowerCase() == 'sun') {
                     return 0;
                 }
-                if (dayname.toLowerCase() == 'monday') {
+                if (dayname.toLowerCase() == 'monday' || dayname.toLowerCase() == 'mon') {
                     return 1;
                 }
-                if (dayname.toLowerCase() == 'tuesday') {
+                if (dayname.toLowerCase() == 'tuesday' || dayname.toLowerCase() == 'tue') {
                     return 2;
                 }
-                if (dayname.toLowerCase() == 'wednesday') {
+                if (dayname.toLowerCase() == 'wednesday' || dayname.toLowerCase() == 'wed') {
                     return 3;
                 }
-                if (dayname.toLowerCase() == 'thursday') {
+                if (dayname.toLowerCase() == 'thursday' || dayname.toLowerCase() == 'thu') {
                     return 4;
                 }
-                if (dayname.toLowerCase() == 'friday') {
+                if (dayname.toLowerCase() == 'friday' || dayname.toLowerCase() == 'fri') {
                     return 5;
                 }
-                if (dayname.toLowerCase() == 'saturday') {
+                if (dayname.toLowerCase() == 'saturday' || dayname.toLowerCase() == 'sat') {
                     return 6;
                 }
             }

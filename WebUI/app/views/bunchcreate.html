@@ -35,7 +35,7 @@
     <div ng-hide="oneoffradio == 'No'">
         <h3>Date of ride</h3>
         <div style="display:inline-block; min-height:290px;">
-            <datepicker ng-model="oneoffdate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+            <datepicker ng-model="oneoffdate" init-date="minDate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
         </div>
         <pre>Date of ride is: <em>{{oneoffdate | date:'fullDate' }}</em></pre>
     </div>

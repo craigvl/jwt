@@ -8,9 +8,7 @@ angular.module('jwtApp')
         function getBunches(dayofweek) {
             bunchServices.getBunchesByUserandDay(dayofweek).success(function (bunches) {
                 $scope.bunches = bunches;
-                console.log(bunches);
                 angular.forEach(bunches, function (bunch, key) {
-                    console.log(bunch.startlocation[0].lat);
                     $scope.markers.push({
                         lat: bunch.startlocation[0].lat,
                         lng: bunch.startlocation[0].lng,
@@ -35,7 +33,39 @@ angular.module('jwtApp')
             });
         }
 
+        function getBunchesOneOff(dayofweek, dayofyear) {
+            bunchServices.getBunchesByUserandDayOneOff(dayofweek, dayofyear).success(function (bunches) {
+                $scope.bunches = bunches;
+                angular.forEach(bunches, function (bunch, key) {
+                    $scope.markers.push({
+                        lat: bunch.startlocation[0].lat,
+                        lng: bunch.startlocation[0].lng,
+                        message: bunch.name,
+                        layer: 'rides',
+                        zoom: 8
+                    });
+
+                });
+            }).error(function (err) {
+                if (err == null) {
+                    alert('warning', "unable to get bunches! ", "No web server?");
+                    $state.go('login');
+                }
+                if (err.message == 'location_not_set') {
+                    alert('warning', "Please set your location", "");
+                    $state.go('locationset');
+                } else {
+                    alert('warning', "unable to get bunches! ", err.message);
+                    $state.go('login');
+                }
+            });
+        }
+
+        var adddays = dateServices.DaysToAdd(dateServices.GetDayNumber(moment().format('dddd')), dateServices.GetDayNumber(moment().format('dddd')));
+        var dayofyear = moment().add(adddays, 'd');
+
         getBunches(dayofweektoday);
+        getBunchesOneOff(dayofweektoday, dayofyear.dayOfYear());
 
         /*rideServices.getUserRides().success(function (rides) {
     $scope.rides = rides;
@@ -43,6 +73,13 @@ angular.module('jwtApp')
 }).error(function () {
     console.log('unable to get rides');
 });*/
+
+        $scope.refresh = function () {
+            $scope.center = {};
+            $scope.markers = [];
+            getBunches(dayofweektoday);
+            getBunchesOneOff(dayofweektoday, dayofyear.dayOfYear());
+        };
 
         $scope.addBunch = function () {
             usSpinnerService.spin('loginSpin');
@@ -54,25 +91,25 @@ angular.module('jwtApp')
 
         $scope.tabs = [
             {
-                title: 'Sunday'
+                title: 'Sun'
             },
             {
-                title: 'Monday'
+                title: 'Mon'
             },
             {
-                title: 'Tuesday'
+                title: 'Tue'
             },
             {
-                title: 'Wednesday'
+                title: 'Wed'
             },
             {
-                title: 'Thursday'
+                title: 'Thu'
             },
             {
-                title: 'Friday'
+                title: 'Fri'
             },
             {
-                title: 'Saturday'
+                title: 'Sat'
             }
         ];
 
@@ -83,7 +120,7 @@ angular.module('jwtApp')
         };
 
         var today = new moment();
-        console.log(today.day());
+
         $scope.tabs[today.day()].active = true;
 
         $scope.dayofweekdisplay = today.toDate();
@@ -94,7 +131,9 @@ angular.module('jwtApp')
 
             var adddays = dateServices.DaysToAdd(dateServices.GetDayNumber(moment().format('dddd')), dateServices.GetDayNumber(active.title));
             $scope.dayofweekdisplay = (moment().add(adddays, 'd').toDate());
+            var dayofyear = moment().add(adddays, 'd');
             getBunches(active.title);
+            getBunchesOneOff(active.title, dayofyear.dayOfYear());
 
             /*rideServices.getUserRides().success(function (rides) {
                 $scope.rides = rides;
@@ -129,7 +168,6 @@ angular.module('jwtApp')
 
         locationServices.getUserLocation().success(function (startlocation) {
             $scope.startlocation = startlocation;
-            console.log(startlocation);
             $scope.center = {
                 lat: $scope.startlocation.lat,
                 lng: $scope.startlocation.lng,

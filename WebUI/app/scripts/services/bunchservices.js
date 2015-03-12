@@ -8,6 +8,9 @@ angular.module('jwtApp')
             },
             getBunchesByUsers: function () {
                 return $http.get(API_URL + 'bunch/byuser')
+            },
+            getBunchesByUserandDayOneOff: function (id, dayofyear) {
+                return $http.get(API_URL + 'bunch/byuseranddayoneoff?id=' + id + '&dayofyear=' + dayofyear)
             }
         }
     });

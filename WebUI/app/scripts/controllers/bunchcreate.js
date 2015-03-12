@@ -69,6 +69,7 @@ angular.module('jwtApp')
         $scope.center = {};
         $scope.paths = {};
         $scope.cen = {};
+        $scope.oneoffdate = new Date();
         $scope.availableDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $scope.hour = {};
         $scope.stravaride = {};
@@ -188,11 +189,5 @@ angular.module('jwtApp')
             }).error(function (err) {
                 alert('warning', "Unable to create ride?", '');
             });
-
-            console.log($scope.oneoff);
-            console.log($scope.regularTime);
-            console.log($scope.oneOffTime);
-            console.log($scope.multipleSelect.days);
-            console.log($scope.time);
         }
     });
