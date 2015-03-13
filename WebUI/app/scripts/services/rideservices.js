@@ -5,6 +5,16 @@ angular.module('jwtApp')
         return {
             getUserRides: function () {
                 return $http.get(API_URL + 'ride/byuser')
+            },
+            addRider: function (rideid) {
+                return $http.post(API_URL + 'ride/addrider', {
+                    rideid: rideid
+                })
+            },
+            removeRider: function (rideid) {
+                return $http.post(API_URL + 'ride/removerider', {
+                    rideid: rideid
+                })
             }
         }
     });

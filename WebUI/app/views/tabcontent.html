@@ -1,11 +1,10 @@
 <h3>{{dayofweekdisplay | date : 'fullDate'}}</h3>
-<hr>
 <div ng-repeat="bunch in bunches">
     <div ng-repeat="ride in bunch.rides">
         <h4>{{bunch.name}} @ {{ride.date | date : 'mediumTime'}}</h4>
         <div>
-            <button ng-click="" class="btn btn-success">In</button>
-            <button ng-click="" class="btn btn-danger">Out</button>
+            <button ng-click="in(ride.id)" class="btn btn-success">In</button>
+            <button ng-click="out(ride.id)" class="btn btn-danger">Out</button>
         </div>
         <hr>
     </div>
@@ -14,8 +13,8 @@
     <div ng-repeat="ride in bunch.rides">
         <h4>{{bunch.name}} @ {{ride.date | date : 'mediumTime'}}</h4>
         <div>
-            <button ng-click="" class="btn btn-success">In</button>
-            <button ng-click="" class="btn btn-danger">Out</button>
+            <button ng-click="in(ride.id)" class="btn btn-success">In</button>
+            <button ng-click="out(ride.id)" class="btn btn-danger">Out</button>
         </div>
         <hr>
     </div>

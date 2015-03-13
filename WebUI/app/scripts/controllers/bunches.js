@@ -123,6 +123,16 @@ angular.module('jwtApp')
             loadBunchesForActiveTab()
         }
 
+        $scope.in = function (rideid) {
+            alert('success', "You'r in!", '');
+            rideServices.addRider(rideid).success(function (rider) {}).error(errorCallback);
+        }
+
+        $scope.out = function (rideid) {
+            alert('danger', "You'r out! ", '');
+            rideServices.removeRider(rideid).success(function (rider) {}).error(errorCallback);
+        }
+
         locationServices.getUserLocation().success(function (startlocation) {
             $scope.startlocation = startlocation;
             $scope.center = {
