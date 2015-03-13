@@ -1,7 +1,63 @@
 'use strict';
 
 angular.module('jwtApp')
-    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state, $auth, usSpinnerService, stravaServices, locationServices) {
+    .controller('BunchcreateCtrl', function ($scope, $http, API_URL, leafletData, alert, $state, $auth, usSpinnerService, stravaServices, locationServices, bunchServices) {
+
+        function init() {
+
+            locationServices.getUserLocation().success(function (startlocation) {
+                $scope.startlocation = startlocation;
+                $scope.cen = {
+                        lat: $scope.startlocation.lat,
+                        lng: $scope.startlocation.lng,
+                        zoom: 13
+                    },
+
+                    $scope.center = {
+                        lat: $scope.startlocation.lat,
+                        lng: $scope.startlocation.lng,
+                        zoom: 13
+                    },
+
+                    $scope.markers = {
+                        mainMarker: {
+                            lat: $scope.startlocation.lat,
+                            lng: $scope.startlocation.lng,
+                            focus: true,
+                            message: "Where does the ride meet?",
+                            draggable: true
+                        }
+                    }
+            }).error(function () {
+                console.log('unable to get locations');
+                alert('success', 'Please select a location');
+                $state.go('locationset');
+            });
+
+            $scope.getStravaActivities();
+        }
+
+        $scope.routes = [];
+        $scope.showmap = {};
+        $scope.isstravaauth = {};
+        $scope.minDate = new Date();
+        $scope.time = new Date(0, 0, 0, 5, 30, 0, 0);
+        $scope.oneofftime = new Date(0, 0, 0, 5, 30, 0, 0);
+        $scope.center = {};
+        $scope.paths = {};
+        $scope.cen = {};
+        $scope.oneoffdate = new Date();
+        $scope.availableDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        $scope.hour = {};
+        $scope.stravaride = {};
+        $scope.hours = ['1', '2', '3', '4', '5', '6', '7'];
+        $scope.multipleSelect = {};
+        $scope.multipleSelect.days = ['Tuesday', 'Thursday'];
+        $scope.oneoff = false;
+        $scope.oneoffradio = 'No';
+        $scope.privateradio = 'No';
+        $scope.private = false;
+        $scope.sponsoredradio = 'No';
 
         $scope.addRoute = function () {
             $scope.routes.push({
@@ -60,28 +116,6 @@ angular.module('jwtApp')
             })
         };
 
-        $scope.routes = [];
-        $scope.showmap = {};
-        $scope.isstravaauth = {};
-        $scope.minDate = new Date();
-        $scope.time = new Date(0, 0, 0, 5, 30, 0, 0);
-        $scope.oneofftime = new Date(0, 0, 0, 5, 30, 0, 0);
-        $scope.center = {};
-        $scope.paths = {};
-        $scope.cen = {};
-        $scope.oneoffdate = new Date();
-        $scope.availableDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        $scope.hour = {};
-        $scope.stravaride = {};
-        $scope.hours = ['1', '2', '3', '4', '5', '6', '7'];
-        $scope.multipleSelect = {};
-        $scope.multipleSelect.days = ['Tuesday', 'Thursday'];
-        $scope.oneoff = false;
-        $scope.oneoffradio = 'No';
-        $scope.privateradio = 'No';
-        $scope.private = false;
-        $scope.sponsoredradio = 'No';
-
         $scope.layers = {
             baselayers: {
                 osm: {
@@ -106,37 +140,6 @@ angular.module('jwtApp')
         $scope.defaults = {
             tileLayer: "http://a.tiles.mapbox.com/v4/craigvl.lc6j9gf5/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY3JhaWd2bCIsImEiOiJTSEt3NFE0In0.uqpehJUakJt_dPUiaTKLag",
         }
-
-        $scope.getStravaActivities();
-
-        locationServices.getUserLocation().success(function (startlocation) {
-            $scope.startlocation = startlocation;
-            $scope.cen = {
-                    lat: $scope.startlocation.lat,
-                    lng: $scope.startlocation.lng,
-                    zoom: 13
-                },
-
-                $scope.center = {
-                    lat: $scope.startlocation.lat,
-                    lng: $scope.startlocation.lng,
-                    zoom: 13
-                },
-
-                $scope.markers = {
-                    mainMarker: {
-                        lat: $scope.startlocation.lat,
-                        lng: $scope.startlocation.lng,
-                        focus: true,
-                        message: "Where does the ride meet?",
-                        draggable: true
-                    }
-                }
-        }).error(function () {
-            console.log('unable to get locations');
-            alert('success', 'Please select a location');
-            $state.go('locationset');
-        });
 
         $scope.$on("leafletDirectiveMap.click", function (event, args) {
             var leafEvent = args.leafletEvent;
@@ -171,7 +174,7 @@ angular.module('jwtApp')
 
             var daysofweeks = [{}];
 
-            $http.post(API_URL + 'bunch/create', {
+            bunchServices.createBunch({
                 name: $scope.name,
                 desc: $scope.desc,
                 oneoff: $scope.oneoff,
@@ -190,4 +193,5 @@ angular.module('jwtApp')
                 alert('warning', "Unable to create ride?", '');
             });
         }
+        init();
     });

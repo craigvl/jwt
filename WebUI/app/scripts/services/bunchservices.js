@@ -11,6 +11,10 @@ angular.module('jwtApp')
             },
             getBunchesByUserandDayOneOff: function (id) {
                 return $http.get(API_URL + 'bunch/byuseranddayoneoff?id=' + id)
+            },
+            createBunch: function (bunch) {
+
+                return $http.post(API_URL + 'bunch/create', bunch)
             }
         }
     });
