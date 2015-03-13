@@ -3,94 +3,61 @@
 angular.module('jwtApp')
     .controller('BunchesCtrl', function ($scope, $http, API_URL, alert, $state, usSpinnerService, leafletData, locationServices, rideServices, bunchServices, dateServices, moment) {
 
-        var dayofweektoday = new moment().format('dddd');
+        function init() {
+            $scope.tabs[moment().day()].active = true;
+            loadBunchesForActiveTab();
+        }
+
+        function errorCallback(err) {
+            if (err == null) {
+                alert('warning', "unable to get bunches! ", "No web server?");
+                $state.go('login');
+            }
+            if (err.message == 'location_not_set') {
+                alert('warning', "Please set your location", "");
+                $state.go('locationset');
+            } else {
+                alert('warning', "unable to get bunches! ", err.message);
+                $state.go('login');
+            }
+        }
+
+        function drawMarkers(bunches) {
+            angular.forEach(bunches, function (bunch, key) {
+                $scope.markers.push({
+                    lat: bunch.startlocation[0].lat,
+                    lng: bunch.startlocation[0].lng,
+                    message: bunch.name,
+                    layer: 'rides',
+                    zoom: 8
+                });
+            });
+        }
 
         function getBunches(dayofweek) {
             bunchServices.getBunchesByUserandDay(dayofweek).success(function (bunches) {
                 $scope.bunches = bunches;
-                console.log($scope.bunches);
-                angular.forEach(bunches, function (bunch, key) {
-                    $scope.markers.push({
-                        lat: bunch.startlocation[0].lat,
-                        lng: bunch.startlocation[0].lng,
-                        message: bunch.name,
-                        layer: 'rides',
-                        zoom: 8
-                    });
-
-                });
-            }).error(function (err) {
-                if (err == null) {
-                    alert('warning', "unable to get bunches! ", "No web server?");
-                    $state.go('login');
-                }
-                if (err.message == 'location_not_set') {
-                    alert('warning', "Please set your location", "");
-                    $state.go('locationset');
-                } else {
-                    alert('warning', "unable to get bunches! ", err.message);
-                    $state.go('login');
-                }
-            });
+                drawMarkers(bunches);
+            }).error(errorCallback);
         }
 
-        function getBunchesOneOff(dayofweek, dayofyear) {
-            bunchServices.getBunchesByUserandDayOneOff(dayofweek, dayofyear).success(function (bunches) {
-                $scope.bunches = bunches;
-                angular.forEach(bunches, function (bunch, key) {
-                    $scope.markers.push({
-                        lat: bunch.startlocation[0].lat,
-                        lng: bunch.startlocation[0].lng,
-                        message: bunch.name,
-                        layer: 'rides',
-                        zoom: 8
-                    });
-
-                });
-            }).error(function (err) {
-                if (err == null) {
-                    alert('warning', "unable to get bunches! ", "No web server?");
-                    $state.go('login');
-                }
-                if (err.message == 'location_not_set') {
-                    alert('warning', "Please set your location", "");
-                    $state.go('locationset');
-                } else {
-                    alert('warning', "unable to get bunches! ", err.message);
-                    $state.go('login');
-                }
-            });
+        function getBunchesOneOff(dayofyear) {
+            bunchServices.getBunchesByUserandDayOneOff(dayofyear).success(function (bunches) {
+                $scope.oneoffbunches = bunches;
+                drawMarkers(bunches);
+            }).error(errorCallback);
         }
 
-        var adddays = dateServices.DaysToAdd(dateServices.GetDayNumber(moment().format('dddd')), dateServices.GetDayNumber(moment().format('dddd')));
-        var dayofyear = moment().add(adddays, 'd');
-
-        getBunches(dayofweektoday);
-        getBunchesOneOff(dayofweektoday, dayofyear.dayOfYear());
-
-        /*rideServices.getUserRides().success(function (rides) {
-    $scope.rides = rides;
-    console.log(rides);
-}).error(function () {
-    console.log('unable to get rides');
-});*/
-
-        $scope.refresh = function () {
+        function loadBunchesForActiveTab() {
+            var activetab = $scope.active();
             $scope.center = {};
             $scope.markers = [];
-            getBunches(dayofweektoday);
-            getBunchesOneOff(dayofweektoday, dayofyear.dayOfYear());
-            $scope.tabs[today.day()].active = true;
-            $scope.dayofweekdisplay = today.toDate();
-        };
-
-        $scope.addBunch = function () {
-            usSpinnerService.spin('loginSpin');
-            $state.go('bunchcreate');
-        };
-
-        $scope.center = {};
-        $scope.markers = [];
+            var adddays = dateServices.DaysToAdd(dateServices.GetDayNumber(moment().format('dddd')), dateServices.GetDayNumber(activetab.title));
+            var datefortab = moment().add(adddays, 'd');
+            getBunches(activetab.title);
+            getBunchesOneOff(datefortab.dayOfYear());
+            $scope.dayofweekdisplay = datefortab.toDate();
+        }
 
         $scope.tabs = [
             {
@@ -116,35 +83,11 @@ angular.module('jwtApp')
             }
         ];
 
-        $scope.activetab = function () {
+        $scope.active = function () {
             return $scope.tabs.filter(function (tab) {
                 return tab.active;
             })[0];
         };
-
-        var today = new moment();
-
-        $scope.tabs[today.day()].active = true;
-        $scope.dayofweekdisplay = today.toDate();
-        $scope.tabclick = function (active) {
-            $scope.bunches = [];
-            $scope.markers = [];
-
-            var adddays = dateServices.DaysToAdd(dateServices.GetDayNumber(moment().format('dddd')), dateServices.GetDayNumber(active.title));
-            $scope.dayofweekdisplay = (moment().add(adddays, 'd').toDate());
-            var dayofyear = moment().add(adddays, 'd');
-            getBunches(active.title);
-            getBunchesOneOff(active.title, dayofyear.dayOfYear());
-
-            /*rideServices.getUserRides().success(function (rides) {
-                $scope.rides = rides;
-                console.log(rides);
-            }).error(function () {
-                console.log('unable to get rides');
-            });*/
-
-            //$scope.rides = [];
-        }
 
         $scope.layers = {
             baselayers: {
@@ -167,6 +110,19 @@ angular.module('jwtApp')
             }
         };
 
+        $scope.refresh = function () {
+            loadBunchesForActiveTab();
+        };
+
+        $scope.addBunch = function () {
+            usSpinnerService.spin('loginSpin');
+            $state.go('bunchcreate');
+        };
+
+        $scope.tabclick = function () {
+            loadBunchesForActiveTab()
+        }
+
         locationServices.getUserLocation().success(function (startlocation) {
             $scope.startlocation = startlocation;
             $scope.center = {
@@ -174,10 +130,8 @@ angular.module('jwtApp')
                 lng: $scope.startlocation.lng,
                 zoom: 12
             };
-        }).error(function () {
-            console.log('unable to get locations');
-            alert('success', 'Please select a location');
-            $state.go('locationset');
-        });
+        }).error(errorCallback);
+
+        init();
 
     });
