@@ -6,6 +6,7 @@ angular.module('jwtApp')
         function init() {
             $scope.tabs[moment().day()].active = true;
             loadBunchesForActiveTab();
+            $scope.$broadcast('someEvent', [1, 2, 3]);
         }
 
         function errorCallback(err) {

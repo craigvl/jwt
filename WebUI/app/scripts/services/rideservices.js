@@ -15,6 +15,9 @@ angular.module('jwtApp')
                 return $http.post(API_URL + 'ride/removerider', {
                     rideid: rideid
                 })
+            },
+            getRiders: function (ride) {
+                return $http.get(API_URL + 'ride/getriders?id=' + ride)
             }
         }
     });
