@@ -16,8 +16,8 @@ angular.module('jwtApp')
                     rideid: rideid
                 })
             },
-            getRiders: function (ride) {
-                return $http.get(API_URL + 'ride/getriders?id=' + ride)
+            getRiders: function (rideid) {
+                return $http.get(API_URL + 'ride/getriders?id=' + rideid)
             }
         }
     });

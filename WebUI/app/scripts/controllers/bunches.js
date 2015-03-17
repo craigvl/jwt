@@ -49,6 +49,10 @@ angular.module('jwtApp')
             }).error(errorCallback);
         }
 
+        function getRiders(rideid) {
+            rideServices.getRiders(rideid).success(function (riders) {}).error(errorCallback);
+        }
+
         function loadBunchesForActiveTab() {
             var activetab = $scope.active();
             $scope.center = {};
