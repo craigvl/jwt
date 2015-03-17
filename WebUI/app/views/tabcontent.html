@@ -3,11 +3,10 @@
     <div ng-repeat="ride in bunch.rides">
         <h4>{{bunch.name}} @ {{ride.date | date : 'mediumTime'}}</h4>
         <div>
-            {{bunch.craig}}
             <button ng-click="in(ride.id)" class="btn btn-success">In</button>
             <button ng-click="out(ride.id)" class="btn btn-danger">Out</button>
         </div>
-        <div riders ride=ride>sss</div>
+        <div riders ride=ride></div>
         <hr>
     </div>
 </div>

@@ -125,12 +125,13 @@ angular.module('jwtApp')
         };
 
         $scope.tabclick = function () {
-            loadBunchesForActiveTab()
+            loadBunchesForActiveTab();
         }
 
         $scope.in = function (rideid) {
             alert('success', "You'r in!", '');
             rideServices.addRider(rideid).success(function (rider) {}).error(errorCallback);
+            loadBunchesForActiveTab();
         }
 
         $scope.out = function (rideid) {
