@@ -193,3 +193,9 @@ body {
     color: #ebebeb;
     padding-left: 35px;
 }
+
+.roundrect {
+    border-radius: 15px;
+    height: 50px;
+    width: 50px;
+}
