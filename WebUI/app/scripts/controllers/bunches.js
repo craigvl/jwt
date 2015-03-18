@@ -129,14 +129,18 @@ angular.module('jwtApp')
         }
 
         $scope.in = function (rideid) {
-            alert('success', "You'r in!", '');
-            rideServices.addRider(rideid).success(function (rider) {}).error(errorCallback);
-            loadBunchesForActiveTab();
+            rideServices.addRider(rideid).success(function (rider) {
+                alert('success', "You'r in!", '');
+                console.log('success');
+                loadBunchesForActiveTab();
+            }).error(errorCallback);
         }
 
         $scope.out = function (rideid) {
             alert('danger', "You'r out! ", '');
-            rideServices.removeRider(rideid).success(function (rider) {}).error(errorCallback);
+            rideServices.removeRider(rideid).success(function (rider) {
+                loadBunchesForActiveTab();
+            }).error(errorCallback);
         }
 
         locationServices.getUserLocation().success(function (startlocation) {

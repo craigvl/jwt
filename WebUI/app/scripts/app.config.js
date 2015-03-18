@@ -1,6 +1,17 @@
-angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $httpProvider, $authProvider, API_URL) {
+angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $httpProvider, $authProvider, API_URL, gravatarServiceProvider) {
 
     $urlRouterProvider.otherwise('/');
+
+    gravatarServiceProvider.defaults = {
+        "default": 'retro' // Mystery man as default for missing avatars
+    };
+
+    // Use https endpoint
+    gravatarServiceProvider.secure = false;
+
+    // Force protocol
+    //gravatarServiceProvider.protocol = 'my-protocol';
+
 
     $stateProvider
 
