@@ -77,4 +77,6 @@ angular.module('jwtApp').config(function ($urlRouterProvider, $stateProvider, $h
     $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
 })
 
-.constant('API_URL', 'http://localhost:1337/')
+//.constant('API_URL', 'http://localhost:1337/')
+
+.constant('API_URL', 'http://bunchyapi.herokuapp.com/')
