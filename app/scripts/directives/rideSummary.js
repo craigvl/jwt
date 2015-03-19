@@ -5,6 +5,6 @@ angular.module('jwtApp').directive('rideSummary', function () {
         scope: {
             rides: '='
         },
-        templateUrl: '/templates/rideSummary.html'
+        templateUrl: '/views/rideSummary.html'
     };
 });

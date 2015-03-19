@@ -5,6 +5,6 @@ angular.module('jwtApp').directive('bunchSummary', function () {
         scope: {
             bunches: '='
         },
-        templateUrl: 'templates/bunchSummary.html'
+        templateUrl: 'bunchSummary.html'
     };
 });

@@ -6,7 +6,7 @@ angular.module('jwtApp').directive('riders', function () {
         scope: {
             ride: '=ride'
         },
-        templateUrl: '/templates/riders.html',
+        templateUrl: '/views/riders.html',
         controller: function ($scope, rideServices) {
 
             $scope.riders = [];
