@@ -5,7 +5,7 @@
 root = true
 
 
-[*]
+[*]f
 
 # Change these settings to your own preference
 indent_style = space
